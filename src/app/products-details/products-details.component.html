@@ -1,0 +1,38 @@
+<div class="card-body"> 
+    <div class="product">
+   <div class="product-details"> 
+     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openDetProducts()" style="background-color: transparent;border: none;">
+         <i class="bi bi-info-circle"></i>
+       </button>
+       <img [src]="getImageURL()" [style.width.px]="90" [style.height.px]="90" />
+     <div class="product-info">
+       <div class="name">{{p?.name}}
+         
+          <span class="badge rounded-pill badge-notification bg-danger">{{p?.quantity}}</span>
+          @if (p?.qeerebyasali) {
+          <span class="badge rounded-pill badge-notification bg-danger"><i style="color: rgb(255, 255, 255);font-weight:900;" class="bi bi-exclamation-triangle"></i>  Low Stock</span>
+}
+         </div>
+       <div class="description">{{p?.parttype}}</div>
+     </div>
+   </div>
+   
+   
+       <!-- @if (p.qeerebyasali) {
+           <div style=" font-size: 40px;">
+               <i style="color: red;" class="bi bi-exclamation-triangle"></i>
+   </div>
+   <div>
+       <p style="color: red; font-weight: bold; margin-left: 5px;">Low Stock</p>
+   </div>
+   } -->
+   
+ 
+
+   <div class="price">
+     <div> {{ p?.price }} MAD</div>
+     <button class="btn btn-light" (click)="buying()"><i class="bi bi-cart"></i></button>
+   </div>
+ 
+ </div>
+</div>
