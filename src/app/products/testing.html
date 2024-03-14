@@ -1,0 +1,81 @@
+<div class="container-xl" >
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title" style="background-color:#E1C5B4;">
+              <!-- #CE7349 -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Trending <b>Products</b></h2>
+                    </div>
+                </div>
+            </div>
+            @if (products) {
+                @for (p of products; track $index) {
+           
+                    <div class="card-body"> 
+                         <div class="product">
+                        <div class="product-details"> 
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="open(p)" style="background-color: transparent;border: none;">
+                              <i class="bi bi-info-circle"></i>
+                            </button>
+                            <img [src]="getImageURL(p)" [style.width.px]="90" [style.height.px]="90" />
+                          <div class="product-info">
+                            <div class="name">{{p.name}}
+                              
+                               <span class="badge rounded-pill badge-notification bg-danger">{{p.quantity}}</span>
+                               @if (p.qeerebyasali) {
+                               <span class="badge rounded-pill badge-notification bg-danger"><i style="color: rgb(255, 255, 255);font-weight:900;" class="bi bi-exclamation-triangle"></i>  Low Stock</span>
+  }
+                              </div>
+                            <div class="description">{{p.parttype}}</div>
+                          </div>
+                        </div>
+                        
+                        
+                            <!-- @if (p.qeerebyasali) {
+                                <div style=" font-size: 40px;">
+                                    <i style="color: red;" class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <p style="color: red; font-weight: bold; margin-left: 5px;">Low Stock</p>
+                        </div>
+                        } -->
+                        
+                      
+                    
+                        <div class="price">
+                          <div> {{ p.price }} MAD</div>
+                          <button class="btn btn-light" (click)="buying(p)"><i class="bi bi-cart"></i></button>
+                        </div>
+                      
+                      </div>
+                    </div>
+    
+            }
+            } @else {
+                <ng-template #errors>{{errorMessage}}</ng-template>
+            }
+            </div>
+        </div></div>
+  
+        <div #exampleModal class="modal fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <i class="bi bi-bag" style="font-size: 25px;"></i><p style="width: 50px;"></p><h1 class="modal-title fs-5" style="font-weight:bold;" id="exampleModalLabel" sty>{{tkherbiqa}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <img src="./../../assets/images/picture1.png"  [style.width.px]="350" [style.height.px]="90" style="align-items: center;" />
+                <br/>
+                <p style="font-weight: 600;">{{description}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()"><i class="bi bi-bag-x"></i></button>
+                <button type="button" class="btn btn-primary"><i class="bi bi-bag-check-fill" (click)="buyingandclose(productselected)"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+       
