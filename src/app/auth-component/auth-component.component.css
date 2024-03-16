@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
+
 * {
   margin: 0;
   padding: 0;
@@ -109,13 +110,17 @@ form.sign-in-form {
   padding: 0.7rem 0;
   font-size: 1rem;
 }
-
+.bold-twitter {
+  font-weight: bold;
+}
 .social-media {
   display: flex;
   justify-content: center;
 }
 
 .social-icon {
+  background-color: transparent;
+
   height: 46px;
   width: 46px;
   display: flex;

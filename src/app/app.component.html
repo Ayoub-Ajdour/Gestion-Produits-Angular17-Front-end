@@ -26,7 +26,7 @@
 
     <ul class="navbar-nav flex-row d-none d-md-flex">
       <li class="nav-item me-3 me-lg-1 active">
-        <a class="nav-link" href="#">
+        <a class="nav-link" routerLink="/accueil">
           <span><i class="fas fa-home fa-lg"></i></span>
           <!-- <span class="badge rounded-pill badge-notification bg-danger">1</span> -->
         </a>
@@ -39,6 +39,10 @@
 
         <a class="nav-link" routerLink="/accueil/products">
           <span><i class="fas fa-shopping-bag fa-lg"></i></span>
+        </a>
+      </li>
+      <li>
+        <a><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/bee.png" alt="bee"/>        
         </a>
       </li>
     </ul>
@@ -75,39 +79,40 @@
        
       </li>
       <li class="nav-item dropdown me-3 me-lg-1">
-        <a class="nav-link dropdown-toggle hidden-arrow">
+        <a class="nav-link dropdown-toggle hidden-arrow" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-chevron-circle-down fa-lg"></i>
-        </a> 
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a
+              data-mdb-dropdown-init
+              class="dropdown-item"
+              href="#"
+              role="button"
+              aria-expanded="false"
+              (click)="signout()"
+            >
+            <i class="fas fa-sign-out-alt fa-lg"></i>
+          </a>
+          </li>
+          <!-- Add more submenu items as needed -->
+        </ul>
       </li>
+     
       <!--  -->
 
 
       <li class="nav-item dropdown me-3 me-lg-1">
         <a
           data-mdb-dropdown-init
-          class="nav-link dropdown-toggle hidden-arrow"
+          class="nav-link hidden-arrow"
           href="#"
-          id="navbarDropdownMenuLink"
           role="button"
           aria-expanded="false"
+          (click)="signout()"
         >
-          <i class="fas fa-bell fa-lg"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">12</span>
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <li>
-            <a class="dropdown-item" href="#">Some news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Another news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
-        </ul>
+        <i class="fas fa-sign-out-alt fa-lg"></i>
+      </a>
       </li>
 
 

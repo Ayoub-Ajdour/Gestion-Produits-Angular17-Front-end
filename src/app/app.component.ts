@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet ,RouterModule} from '@angular/router';
 import { AuthService } from './services/auth.service';
-import { user } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, user ,signOut} from '@angular/fire/auth';
 
 
 @Component({
@@ -13,7 +13,15 @@ import { user } from '@angular/fire/auth';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
+  constructor(){
+
+  }
+  firebaseAuth = inject(Auth);
   authService=inject(AuthService);
+  signout(){
+    this.firebaseAuth.signOut();
+    
+  }
   ngOnInit(): void {
      this.authService.user$.subscribe(user=>{
       if(user){

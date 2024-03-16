@@ -2,9 +2,11 @@ import { Injectable, inject, signal } from '@angular/core';
 import { User } from '../../model/userApp.model';
 import { Observable, from, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, user } from '@angular/fire/auth';
+import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile, user } from '@angular/fire/auth';
 import { response } from 'express';
 import { UserInterface } from '../../model/userInterface';
+import { Auth, GoogleAuthProvider, signInWithRedirect } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class AuthService {
   firebaseAuth = inject(Auth);
   user$=user(this.firebaseAuth);
   currentUserSig=signal<UserInterface|null|undefined>(undefined);
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private afAuth: Auth,private router: Router) {
     // this.users = [
     //   { user_id: 1, username: "user1", password: "1234", roles: ["ADMIN", "USER"] },
     //   { user_id: 2, username: "user2", password: "1234", roles: ["USER"] },
@@ -58,7 +60,18 @@ export class AuthService {
     // }
     // return of(userAppModel);
   }
-
+  async loginwithgoogle():Promise<Observable<boolean>>{
+    await signInWithPopup(this.afAuth, new GoogleAuthProvider())
+  .then(googleResponse => {
+    console.log("paaaaaaaaas erooooooor 👌"+googleResponse.user.displayName);
+   return of(true);
+  })
+  .catch(err => {
+    console.log("erooooooooooooooorr 😒"+err);
+  });
+  return of(false);
+    console.log("++");
+  }
   public authenticat():Observable<boolean>{
     this.isAuthenticat();
     // this.userAuth=user;

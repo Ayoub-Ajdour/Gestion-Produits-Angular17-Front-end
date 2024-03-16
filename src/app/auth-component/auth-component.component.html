@@ -16,8 +16,12 @@
           </div>
           <input type="submit" style="background-color: #A7856D; color: #ffffff;" value="Login" class="btn solid" (click)="signIn()" />
         </form>
-  
-        <form class="sign-up-form">
+        <div class="d-flex justify-content-center text-center mt-4 pt-1 social-media">
+         <button (click)="loginwithgoogle()" class="social-icon"><i class="fab fa-google fa-lg"></i></button>
+          <a href="#!" class="social-icon"><i class="fab fa-facebook-f fa-lg"></i></a>
+          <a href="#!" class="social-icon bold-twitter"><i  style="font-weight: bold;" class="bi bi-twitter-x"></i></a>
+      </div>
+      <form class="sign-up-form">
           <h2 class="title">Sign up</h2>
           @if (error) {
             <div>{{error}}</div>

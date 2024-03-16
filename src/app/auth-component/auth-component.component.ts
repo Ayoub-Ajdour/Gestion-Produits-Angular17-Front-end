@@ -53,7 +53,21 @@ export class AuthComponentComponent implements OnInit{
     })
   }
   
-
+  async loginwithgoogle(){
+    (await this.auth.loginwithgoogle()).subscribe({
+      next:()=>{
+               console.log("nice 💚💚💚💚💚");
+               this.auth.authenticat().subscribe({
+                next:()=>{
+                  
+                  this.router.navigateByUrl("/accueil");
+                },
+                error:(err)=>{this.error=err}
+              })
+      },
+    });
+    console.log("++");
+  }
   signUp() {
     console.log(this.username,this.email,this.password);
     this.auth.addUser(this.username,this.email,this.password).subscribe({
