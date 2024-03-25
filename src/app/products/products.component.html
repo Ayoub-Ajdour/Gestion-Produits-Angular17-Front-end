@@ -11,7 +11,7 @@
           </div>
           @if (products) {
               @for (p of products; track $index) {
-         
+                  
                  <app-products-details [p]="p" (openDetProduct)="open(p)" (getImagelink)="getImageURL(p)" (buyingso)="buying(p)" ></app-products-details>
   
           }

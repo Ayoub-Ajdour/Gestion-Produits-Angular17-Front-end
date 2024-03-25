@@ -1,0 +1,44 @@
+<div class="container-xl" >
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title" style="background-color:rgb(254, 28, 28);">
+              <!-- #CE7349 -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>ALL <b>Products</b></h2>
+                    </div>
+                </div>
+            </div>
+            @if (products) {
+                @for (p of products; track $index) {
+           
+                   <app-promoproductsdetails [p]="p" (openDetProduct)="open(p)" (getImagelink)="getImageURL(p)" (deletingso)="deleteProduct(p)"  (promoevt)="addpromo(p)"></app-promoproductsdetails>
+    
+            }
+            } @else {
+                <ng-template #errors>{{errorMessage}}</ng-template>
+            }
+            </div>
+        </div></div>
+  
+        <div #exampleModal class="modal fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <i class="bi bi-bag" style="font-size: 25px;"></i><p style="width: 50px;"></p><h1 class="modal-title fs-5" style="font-weight:bold;" id="exampleModalLabel" sty>{{tkherbiqa}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <img src="./../../assets/images/picture1.png"  [style.width.px]="350" [style.height.px]="90" style="align-items: center;" />
+                <br/>
+                <p style="font-weight: 600;">{{description}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()"><i class="bi bi-bag-x"></i></button>
+                <button type="button" class="btn btn-primary"><i class="bi bi-bag-check-fill" (click)="buyingandclose(productselected)"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+  

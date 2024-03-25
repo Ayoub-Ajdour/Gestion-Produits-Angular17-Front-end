@@ -18,7 +18,7 @@ openDetProducts() {
 }
 
 getImageURL():string{
-  return "assets/images/"+this.p?.url_image;
+  return "assets/images/"+this.p?.urlImage;
 }
 buying(){
   this.buyingso.emit();

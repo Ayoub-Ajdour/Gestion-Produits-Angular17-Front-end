@@ -1,5 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EDE3DB;">
-  <div class="container-fluid justify-content-between">
+
+    @if(a==true){
+      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EDE3DB;">
+        <div class="container-fluid justify-content-between">
     <div class="d-flex">
       <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="https://biotoudert.com/">
         <img
@@ -24,28 +26,31 @@
       </form>
     </div>
 
+   
     <ul class="navbar-nav flex-row d-none d-md-flex">
       <li class="nav-item me-3 me-lg-1 active">
-        <a class="nav-link" routerLink="/accueil">
-          <span><i class="fas fa-home fa-lg"></i></span>
-          <!-- <span class="badge rounded-pill badge-notification bg-danger">1</span> -->
-        </a>
+          <a class="nav-link" routerLink="/accueil">
+              <span class="icon-container"><i class="fas fa-home fa-lg"></i></span>
+              <!-- <span class="badge rounded-pill badge-notification bg-danger">1</span> -->
+          </a>
       </li>
-
-      
-
       <li class="nav-item me-3 me-lg-1">
-                  <!-- <a class="nav-link" aria-current="page" routerLink="/accueil/products"> -->
-
-        <a class="nav-link" routerLink="/accueil/products">
-          <span><i class="fas fa-shopping-bag fa-lg"></i></span>
-        </a>
+          <a class="nav-link" routerLink="/accueil/products">
+              <span class="icon-container"><i class="fas fa-shopping-bag fa-lg"></i></span>
+          </a>
       </li>
-      <li>
-        <a><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/bee.png" alt="bee"/>        
-        </a>
+      <li class="nav-item me-3 me-lg-1">
+          <a class="nav-link" routerLink="/accueil/honeyproducts">
+              <span class="icon-container"><i class="fa fa-forumbee fa-lg" aria-hidden="true"></i></span>
+          </a>
       </li>
-    </ul>
+      <li class="nav-item me-3 me-lg-1">
+          <a class="nav-link" routerLink="/accueil/naturalproducts">
+              <span class="icon-container"><i class="fa fa-leaf fa-lg" aria-hidden="true"></i></span>
+          </a>
+      </li>
+  </ul>
+  
   
     <ul class="navbar-nav flex-row">  
       <li class="nav-item me-3 me-lg-1">
@@ -57,7 +62,7 @@
           alt="Ajdour Ayoub"
           loading="lazy"
           />
-          <strong class="d-none d-sm-block ms-1">Ajdour Ayoub</strong>
+          <strong class="d-none d-sm-block ms-1">{{nameofuser}}</strong>
         </a>
       </li>
       <li class="nav-item me-3 me-lg-1">
@@ -66,10 +71,36 @@
         </a>
       </li>
       <li class="nav-item dropdown me-3 me-lg-1">
-        <a class="nav-link dropdown-toggle hidden-arrow">
+        <a class="nav-link dropdown-toggle hidden-arrow" data-bs-toggle="dropdown" routerLink="/accueil" aria-expanded="false">
           <i class="fas fa-shopping-basket"></i>
           <span class="badge rounded-pill badge-notification bg-danger">{{raqm}}</span>
         </a>
+        <ul class="dropdown-menu">
+          
+        @if (carts) {
+              
+               @for(entry of productsAct | keyvalue; track $index){
+                <li class="product-item">
+                  <div class="product">
+                    <div class="product-details">
+                      <img [src]="getImageURL(entry.key[0])" [style.width.px]="70" [style.height.px]="70" />
+                      <div class="product-info">
+                        <div class="name">{{entry.key[0].name}}
+                          <span class="badge rounded-pill badge-notification bg-danger">{{ entry.value }}</span>
+                        </div>
+                        <!-- <div class="description">{{entry.key[0].partType}}</div> -->
+                      </div>
+                    </div>
+                    <div class="price">
+                      <button class="btn btn-light" (click)="deleteCart(entry.key[0].id)"><i class="bi bi-trash"></i></button>
+                    </div>
+                  </div>
+                </li>
+               }
+              
+            <!-- } -->
+      }
+      </ul>
       </li>
       <li class="nav-item dropdown me-3 me-lg-1">
         <a class="nav-link dropdown-toggle hidden-arrow">
@@ -96,6 +127,7 @@
           </a>
           </li>
           <!-- Add more submenu items as needed -->
+         
         </ul>
       </li>
      
@@ -118,6 +150,111 @@
 
     </ul>
   </div>
+  
 </nav>
+  }@else {
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(254, 28, 28);">
+      <div class="container-fluid justify-content-between">
+  <div class="d-flex">
+    <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="https://biotoudert.com/">
+      <img
+      src="./../assets/images/biotoudert.png"
+      height="50"
+      alt="BioToudert"
+      loading="lazy"
+      />
+    </a>
+
+   
+  </div>
+
+ 
+  <ul class="navbar-nav flex-row d-none d-md-flex">
+    <li class="nav-item me-3 me-lg-1">
+      <a class="nav-link" routerLink="/accueil/admin">
+          <span><i class="fas fa-home fa-lg"></i></span>
+      </a>
+    </li>
+    <li class="nav-item me-3 me-lg-1">
+
+      <a class="nav-link" routerLink="/accueil/allproducts">
+          <span><i class="fa fa-th-list" aria-hidden="true"></i></span>
+      </a>
+    </li>
+    <li class="nav-item me-3 me-lg-1" [ngClass]="{ 'disabled': true }">
+     
+        <span  class="nav-link"><i class="fa fa-paint-brush" aria-hidden="true"></i></span>
+     
+    </li>
+    
+    <li class="nav-item me-3 me-lg-1">
+      <a class="nav-link" routerLink="/accueil/favoriteproducts">
+          <span><i class="fas fa-star fa-lg"></i></span>
+      </a>
+    </li>
+    <li class="nav-item me-3 me-lg-1 active">
+      <a class="nav-link" routerLink="/accueil/addproduct">
+        <span><i class="fas fa-plus-circle fa-lg"></i></span>
+      </a>
+    </li>
+
+ 
+    
+
+<li class="nav-item me-3 me-lg-1">
+  <a class="nav-link" routerLink="/accueil/users">
+      <span><i class="fas fa-user fa-lg"></i></span>
+  </a>
+</li>
+<li class="nav-item me-3 me-lg-1">
+  <a class="nav-link" routerLink="/accueil/biotoudert">
+      <span><i class="fas fa-globe fa-lg"></i></span>
+  </a>
+</li>
+
+  
+  </ul>
+
+  <ul class="navbar-nav flex-row">  
+    <li class="nav-item me-3 me-lg-1">
+      <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+        <img
+        src="./../assets/images/me.jpeg"
+        class="rounded-circle"
+        height="40"
+        alt="Ajdour Ayoub"
+        loading="lazy"
+        />
+        <strong class="d-none d-sm-block ms-1">Admin</strong>
+      </a>
+    </li>
+   
+    
+   
+   
+   
+    <!--  -->
+
+
+    <li class="nav-item dropdown me-3 me-lg-1">
+      <a
+        data-mdb-dropdown-init
+        class="nav-link hidden-arrow"
+        href="#"
+        role="button"
+        aria-expanded="false"
+        (click)="signout()"
+      >
+      <i class="fas fa-sign-out-alt fa-lg"></i>
+    </a>
+    </li>
+
+
+  </ul>
+</div>
+
+</nav>
+  }
+  
 
 <router-outlet></router-outlet>

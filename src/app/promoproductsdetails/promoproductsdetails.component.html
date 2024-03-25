@@ -1,0 +1,39 @@
+<div class="card-body"> 
+    <div class="product">
+   <div class="product-details"> 
+     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openDetProducts()" style="background-color: transparent;border: none;">
+         <i class="bi bi-info-circle"></i>
+       </button>
+       <img [src]="getImageURL()" [style.width.px]="90" [style.height.px]="90" />
+     <div class="product-info">
+       <div class="name">{{p?.name}}
+         
+          <span class="badge rounded-pill badge-notification bg-danger">{{p?.quantity}}</span>
+          @if (p?.qeerebyasali) {
+          <span class="badge rounded-pill badge-notification bg-danger"><i style="color: rgb(255, 255, 255);font-weight:900;" class="bi bi-exclamation-triangle"></i>  Low Stock</span>
+}
+         </div>
+       <div class="description">{{p?.partType}}</div>
+     </div>
+   </div>
+   
+   <div class="price">
+    @if(p?.promo==false){<div>{{ p?.price }} MAD</div>}
+    @else {<div style="color: red;font-weight: bold;">{{ p?.price }} MAD</div>}
+    <div class="divider"></div>
+    <div class="buttons">
+      @if(p?.promo==false){<button class="btn btn-light" (click)="promo()">
+          <i class="bi bi-tag"></i>
+        </button> 
+      }@else {
+          <button class="btn btn-light" style="background-color: gold;color: black;border-color: gold;" (click)="promo()">
+          <i class="bi bi-tag"></i>
+          </button>
+        }
+      
+    </div>
+</div>
+
+ 
+ </div>
+</div>

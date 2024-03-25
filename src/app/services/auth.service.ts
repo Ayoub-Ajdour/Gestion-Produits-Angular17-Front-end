@@ -74,12 +74,11 @@ export class AuthService {
   }
   public authenticat():Observable<boolean>{
     this.isAuthenticat();
-    // this.userAuth=user;
-    // localStorage.setItem("user",JSON.stringify({username:user.username,roles:user.roles,jwt:"JWT Athentification"}))
     this.auth=true;
     return of(true)
   }
   public isAuthenticat():boolean{
     return (this.auth);
   }
+ 
 }

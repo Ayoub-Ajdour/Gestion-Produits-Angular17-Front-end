@@ -1,0 +1,68 @@
+<div class="container-xl">
+    <div class="table-responsive" >
+      <div class="table-wrapper" style="border: 2px solid rgb(254, 28, 28);border-radius: 10px;padding: 20px;">
+        <div class="table-title" style="border: 2px solid rgb(254, 28, 28);border-top-left-radius: 10px;border-top-right-radius: 10px;background-color: rgb(254, 28, 28);">
+          <div class="row">
+            <div class="col-sm-6">
+              <h2>Manage <b>Product</b></h2>
+            </div>
+          </div>
+        </div>
+  
+        <div class="container-fluid" ng-app="application" ng-controller="controller">
+  
+            <div [ngClass]="alert.class" role="alert" class="alert font-weight-bold text-center">
+                {{ alert.message }}
+              </div>
+              
+          <div class="row">
+  
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="Name">Name</label>
+                <input id="name" class="form-control name" [(ngModel)]="name" placeholder="Name" maxlength="40" required autocomplete="off" [disabled]="submitted">
+              </div>
+            </div>
+            
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="Phone">Price</label>
+                <input id="mobile" type="tel" class="form-control price" [(ngModel)]="price" placeholder="Price" maxlength="10" required autocomplete="off" [disabled]="submitted">
+              </div>
+            </div>
+  
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="email">Quantity</label>
+                <input id="email" type="text" class="form-control quantity" [(ngModel)]="quantity" placeholder="Quantity" maxlength="40" required autocomplete="off" [disabled]="submitted">
+              </div>
+            </div>
+  
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="type">Type</label>
+                <select id="type" class="form-control" [(ngModel)]="selectedType" [disabled]="submitted" required>
+                  <option value="" disabled selected>Select type of product...</option>
+                  <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="Address">Description</label>
+                <input id="Address" type="text" class="form-control description" [(ngModel)]="description" placeholder="Description" maxlength="10" required autocomplete="off" [disabled]="submitted">
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group text-center">
+            <br>
+            <button class="btn btn-dark" (click)="syncSaveProduct()" [disabled]="disabledStatus">Save</button>
+        </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

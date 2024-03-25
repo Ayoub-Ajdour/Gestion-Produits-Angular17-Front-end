@@ -88,10 +88,10 @@ throw new Error('Method not implemented.');
   }
 
   getImageURL(p : product){
-    return "assets/images/"+p.url_image;
+    return "assets/images/"+p.urlImage;
   }
   getImageURLtanya(p : product):string{
-    return "assets/images/"+p.url_imagetanya;
+    return "assets/images/"+p.urlImagetanya;
   }
   deleteProduct(p:product):void{
     // let conf=confirm("Did you want to delete "+p.name+" ?? ");
@@ -120,15 +120,17 @@ throw new Error('Method not implemented.');
       {
         next:(value:any)=> {
         console.log(p.quantity);
-        if(p.quantity==0){
-          this.deleteProduct(p);
-        }
+        // if(p.quantity==0){
+        //    this.deleteProduct(p);
+        // }
         },
         error:(err:any) =>{
           this.errorMessage=err;
         },
       }
      )
+     this.ps.addToCart(p);
+     
   
   }
   

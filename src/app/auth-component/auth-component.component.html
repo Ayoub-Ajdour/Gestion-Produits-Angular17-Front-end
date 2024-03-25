@@ -4,16 +4,25 @@
         <form class="sign-in-form">
           <h2 class="title">Sign in</h2>
           @if (error) {
-            <div>{{error}}</div>
+            <div class="alert alert-danger">
+             <h6> There was a problem</h6>
+              <p>We cannot find an account with that email address</p>
+            </div>
           } 
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" />
+            <input type="text" placeholder="Email" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" required />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" />
+            <input type="{{ passwordVisible ? 'text' : 'password' }}" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" required />
+            <i class="fas" [ngClass]="{ 'fa-eye': passwordVisible, 'fa-eye-slash': !passwordVisible }" (click)="togglePasswordVisibility()"></i>
           </div>
+          
+          
+          
+          
+          
           <input type="submit" style="background-color: #A7856D; color: #ffffff;" value="Login" class="btn solid" (click)="signIn()" />
         </form>
         <div class="d-flex justify-content-center text-center mt-4 pt-1 social-media">
@@ -24,29 +33,49 @@
       <form class="sign-up-form">
           <h2 class="title">Sign up</h2>
           @if (error) {
-            <div>{{error}}</div>
-          }
+            <div class="alert alert-danger">
+             <h6> There was a problem</h6>
+             <p>{{errorMESSAGE}}</p>
+              <p><b><i class="fas fa-exclamation-triangle"></i>  Please correct and try again.</b></p>
+            </div>
+            
+          } 
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"  required="required" autocomplete="off" ng-disabled="submitted"/>
+            <input type="text" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"  #usernameinput="ngModel" required="required" autocomplete="off" ng-disabled="submitted" required pattern="[a-zA-Z0-9._%+-]+[' ']+[a-zA-Z]{2,}$" minlength="4" maxlength="20"/>
+            @if(usernameinput.invalid && usernameinput.dirty){
+              @if (usernameinput.invalid && (usernameinput.dirty || usernameinput.touched)) {
+                <i class="fas fa-spinner fa-spin"></i>
+              }}
+              @if(usernameinput.valid){
+                <i class="fas fa-check"></i>
+              }
           </div>
           <div class="input-field">
             <i class="fas fa-envelope"></i>
             <input type="email" placeholder="Email" [(ngModel)]="email" name="email" #emailInput="ngModel" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" maxlength="40" required="required" autocomplete="off" ng-disabled="submitted"/>
+            @if(emailInput.invalid && emailInput.dirty){
             @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
+              <i class="fas fa-spinner fa-spin"></i>
+            }}
+            @if(emailInput.valid){
+              <i class="fas fa-check"></i>
             }
-         
           </div>
-          
-          <div class="input-field">
+        
+          <div class="input-fieldd">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" [(ngModel)]="password" name="password" #passwordInput="ngModel" required minlength="4" maxlength="10" required="required" autocomplete="off" ng-disabled="submitted"/>
-  
-  
-          
-            <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
-  
-            </div>
+            <input type="{{ passwordVisible ? 'text' : 'password' }}"  placeholder="Password" [(ngModel)]="password" name="password" #passwordInput="ngModel" 
+            required minlength="4" maxlength="10" autocomplete="off"
+            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{4,10}$" />
+            <i class="fas" [ngClass]="{ 'fa-eye': passwordVisible, 'fa-eye-slash': !passwordVisible }" (click)="togglePasswordVisibility()"></i>
+            @if(passwordInput.invalid && passwordInput.dirty){
+              @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
+                <i class="fas fa-spinner fa-spin"></i>
+              }}
+              @if(passwordInput.valid){
+                <i class="fas fa-check"></i>
+              }
           </div>
           <input type="submit" style="background-color: #A7856D; color: #ffffff;" class="btn" value="Sign up" (click)="signUp()" />
         </form>
@@ -56,17 +85,31 @@
     <div class="panels-container">
       <div class="panel left-panel">
         <div class="content">
-          <h3>New here ?</h3>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis, ex ratione. Aliquid!</p>
-          <button class="btn transparent" (click)="showSignUp()">Sign up</button>
+          <h4 style="font-family: Alice!important;line-height: 1.1;text-align: left;">
+          The official sponsor of happiness
+        </h4>
+        <h1 style="font-family: Alice !important;line-height: 1.1;text-align: left;font-weight: bold;">
+          BiouToudert Company
+        </h1>
+        <p style="margin-bottom: 10px;text-align: left;">
+        On the road to happiness, you'll find us waiting for you... Inhale the essence of our products, life... Authenticity, heritage, and purity... #BioToudert and happiness for all 🌹
+      </p>   
+        <button class="btn transparent" (click)="showSignUp()" style="">Sign up</button>
         </div>
-        <img src="../../assets/images/ba11.png" class="image" alt="" />
+        <img style="display: block; margin: 0 auto; margin-top: 0px;" src="../../assets/images/ba11.png" class="image" alt="" />
       </div>
       <div class="panel right-panel">
         <div class="content">
-          <h3>One of us ?</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laboriosam ad deleniti.</p>
-          <button class="btn transparent" (click)="showSignIn()">Sign in</button>
+          <h4 style="font-family: Alice!important;line-height: 1.1;text-align: left;">
+            The official sponsor of happiness
+          </h4>
+          <h1 style="font-family: Alice !important;line-height: 1.1;text-align: left;font-weight: bold;">
+            BiouToudert Company
+          </h1>
+          <p style="margin-bottom: 10px;text-align: left;">
+          On the road to happiness, you'll find us waiting for you... Inhale the essence of our products, life... Authenticity, heritage, and purity... #BioToudert and happiness for all 🌹
+        </p>   
+         <button class="btn transparent" (click)="showSignIn()">Sign in</button>
         </div>
         <img src="../../assets/images/ba22.png" class="image" alt="" />
       </div>
