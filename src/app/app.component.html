@@ -71,7 +71,7 @@
         </a>
       </li>
       <li class="nav-item dropdown me-3 me-lg-1">
-        <a class="nav-link dropdown-toggle hidden-arrow" data-bs-toggle="dropdown" routerLink="/accueil" aria-expanded="false">
+        <a class="nav-link dropdown-toggle hidden-arrow" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-shopping-basket"></i>
           <span class="badge rounded-pill badge-notification bg-danger">{{raqm}}</span>
         </a>
@@ -92,6 +92,7 @@
                       </div>
                     </div>
                     <div class="price">
+                      <!-- <button class="btn btn-light" (click)="minusCart(entry.value)"> <i class="fa fa-minus" aria-hidden="true"></i></button> -->
                       <button class="btn btn-light" (click)="deleteCart(entry.key[0].id)"><i class="bi bi-trash"></i></button>
                     </div>
                   </div>

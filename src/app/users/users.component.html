@@ -1,1 +1,25 @@
-<p>users works!</p>
+<div class="container-xl" >
+  <div class="table-responsive">
+      <div class="table-wrapper">
+          <div class="table-title" style="background-color:rgb(254, 28, 28);">
+            <!-- #CE7349 -->
+              <div class="row">
+                  <div class="col-sm-6">
+                      <h2>ALL <b>Users</b></h2>
+                  </div>
+              </div>
+          </div>
+          @if (users) {
+              @for (u of users; track $index) {
+                <app-usersdetails [u]="u" (deletingso)="deleteUser(u)"></app-usersdetails>
+                 <!-- <app-allproductdetails [p]="p" (openDetProduct)="open(p)" (getImagelink)="getImageURL(p)" (deletingso)="deleteProduct(p)"  (promoevt)="addpromo(p)"></app-allproductdetails> -->
+  
+          }
+          } @else {
+              <ng-template #errors>{{errorMessage}}</ng-template>
+          }
+          </div>
+      </div></div>
+
+     
+      

@@ -52,7 +52,7 @@ throw new Error('Method not implemented.');
   
 
 
-  products!:Array<any>;
+  products!:Array<product>;
   errorMessage:string|undefined;
   qereebysali :boolean | undefined;
   constructor(private ps : ProductService){

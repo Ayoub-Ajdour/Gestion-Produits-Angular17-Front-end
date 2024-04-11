@@ -19,6 +19,21 @@ import { Observable } from 'rxjs';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
+// minusCart(id: number) {
+//   this.productService.minusCart(id).subscribe({
+      
+//     next: (value: any) => {
+//       console.log(value+"  😒😒");
+//       // let index = this.carts.findIndex(value); 
+//       // if (index !== -1) { 
+//       //   this.carts.splice(index, 1); 
+//       // }
+//     },
+//     error: (err: any) => {
+//       console.error('Error deleting cart item:', err);
+//     }
+//   });
+// }
 getImageURL(arg0: product) {
   return "assets/images/"+arg0.urlImage;
 }
@@ -61,9 +76,7 @@ getImageURL(arg0: product) {
       {
         next:(value:UserStock[])=> {
           this.carts=value;
-          this.raqm=this.carts.length;
           this.loadProductsForCarts();
-          
         },
         error:(err:any) =>{
           this.carts=err;
@@ -88,7 +101,7 @@ getImageURL(arg0: product) {
         console.error(error);
       }
     );
-    
+    this.raqm+=cart.quantity;
     });
     console.log(this.productsAct);
    
@@ -97,11 +110,19 @@ getImageURL(arg0: product) {
   ngOnInit(): void {
     this.getAllcarts();
     this.productService.carta$.subscribe(cart => {
-     this.carts = cart; 
+     this.carts = cart;   
     });     
     this.productService.cart$.subscribe(cart => {
-      this.raqm = cart.length; 
-      // this.carts=this.productService.carts;
+      // for(let i=0;i<cart.length;i++){
+      //   this.raqm++;
+      //   const newUserStock = {
+      //     userId: 1,
+      //     productId: cart[0].id,
+      //     quantity: 1
+      //   };
+      //   this.carts.push(newUserStock);
+      //   console.log('caaaaaaaaaaaaaaart 🫡🫡🫡' +cart[i].id+ "   | " +i);
+      // }
     });     
     this.authService.user$.subscribe(user=>{
       if(user){

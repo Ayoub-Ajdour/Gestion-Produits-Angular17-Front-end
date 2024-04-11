@@ -67,24 +67,44 @@
   }
   .product .price {
     display: flex;
-    flex-direction: column;
     font-size: 23px;
-    justify-content: space-around;
     align-items: center;
     min-width: 190px;
-    color: #555;
-    border-left: 2px solid #aaa;
-    margin-left: 50px;
-  }
-  
-  .product .price button {
+    margin-bottom: 20px; /* Add margin-bottom for space after the price div */
+}
+
+.product .price > div:first-child {
+    padding-left: 20px;
+    margin-left: 20px; 
+}
+
+.product .price .divider {
+    border-right: 2px solid #aaa; 
+    height: 100%;
+    margin-right: 20px; 
+    margin-left: 10px; 
+}
+
+.product .price .buttons {
+    display: flex;
+    gap: 10px; 
+    margin-left: 20px; 
+}
+
+.product .price button {
     padding: 10px;
     width: 100px;
-  }
+}
+
   
 
 
- 
+  body {  
+    color: #566787;
+    background: #f5f5f5;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+}
 .table-responsive {
     margin: 30px 0;
 }
@@ -98,7 +118,7 @@
 .table-title {        
     padding-bottom: 15px;
     background: #435d7d;
-    color: #ffffff;
+    color: #fff;
     padding: 16px 30px;
     min-width: 100%;
     margin: -20px -25px 10px;
@@ -143,7 +163,7 @@ table.table tr th:last-child {
     width: 100px;
 }
 table.table-striped tbody tr:nth-of-type(odd) {
-    background-color: s#fcfcfc;
+    background-color: #fcfcfc;
 }
 table.table-striped.table-hover tbody tr:hover {
     background: #f5f5f5;
@@ -282,6 +302,16 @@ table.table .avatar {
 }	
 
 
-
+.product .price {
+    display: flex;
+    flex-direction: column;
+    font-size: 23px;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 190px;
+    color: #555;
+    border-left: 2px solid #aaa;
+    margin-left: 50px;
+  }
 
 

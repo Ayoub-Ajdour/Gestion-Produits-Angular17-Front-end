@@ -1,0 +1,24 @@
+
+    <div class="card-body"> 
+        <div class="product">
+       <div class="product-details"> 
+           <img src="../../assets/images/user1.png" [style.width.px]="90" [style.height.px]="90" />
+         <div class="product-info">
+           <div class="name">{{u?.username}}
+             
+              @if (u?.email==='admin@biotoudert.com') {
+              <span class="badge rounded-pill badge-notification bg-danger">admin <i style="color: rgb(255, 255, 255);font-weight:900;" class="bi bi-exclamation-triangle"></i></span>
+    }
+             </div>
+           <div class="description">{{u?.email}}</div>
+         </div>
+       </div>
+       
+       <div class="price">
+         <button class="btn btn-light" (click)="deleteuser()"><i class="bi bi-trash"></i></button>
+       </div>
+      
+      
+     </div>
+    </div>
+   

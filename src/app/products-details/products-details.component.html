@@ -29,12 +29,14 @@
    } -->
    
  
-
+ 
    <div class="price">
-     <div> {{ p?.price }} MAD</div>
+    @if(p?.promo==true){ <div style="color: gold;font-weight: bold;"> {{ p?.price }} MAD  <i class="fas fa-tags"></i></div>}
+    @else {<div> {{ p?.price }} MAD </div>}
      <button class="btn btn-light" (click)="buying()"><i class="bi bi-cart"></i></button>
    </div>
- 
+  
+  
  </div>
 </div>}
 @else {

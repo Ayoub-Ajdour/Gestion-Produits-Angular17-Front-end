@@ -5,15 +5,15 @@
               <!-- #CE7349 -->
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>ALL <b>Products</b></h2>
+                        <h2>Sales<b>Products</b></h2>
                     </div>
                 </div>
             </div>
             @if (products) {
                 @for (p of products; track $index) {
-           
+                  @if(p.promo==true){
                    <app-promoproductsdetails [p]="p" (openDetProduct)="open(p)" (getImagelink)="getImageURL(p)" (deletingso)="deleteProduct(p)"  (promoevt)="addpromo(p)"></app-promoproductsdetails>
-    
+    }
             }
             } @else {
                 <ng-template #errors>{{errorMessage}}</ng-template>

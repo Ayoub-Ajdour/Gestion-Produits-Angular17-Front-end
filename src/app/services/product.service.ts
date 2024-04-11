@@ -66,7 +66,10 @@ export class ProductService {
       })
     );
   }
+  // minusCart(id: number):Observable<UserStock>{
+  //   return this.http.put<UserStock>(`${this.apiUrl}/userstock/update/${id}`, );
 
+  // }
    createProduct(params: product): Observable<product> {
    
 
@@ -148,7 +151,8 @@ export class ProductService {
    private cartSubject: BehaviorSubject<product[]> = new BehaviorSubject<product[]>([]);
    public cart$: Observable<product[]> = this.cartSubject.asObservable();
    private cartSubjecta: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-   public carta$: Observable<any[]> = this.cartSubjecta.asObservable();
+   public carta$: Observable<UserStock[]> = this.cartSubjecta.asObservable();
+   
    aa(){
     this.getAllCarts().subscribe(
       {
