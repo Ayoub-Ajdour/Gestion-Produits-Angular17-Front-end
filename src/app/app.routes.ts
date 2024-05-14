@@ -13,6 +13,8 @@ import { BiotoudertComponent } from './biotoudert/biotoudert.component';
 import { UpdateproductComponent } from './updateproduct/updateproduct.component';
 import { NaturalproductsComponent } from './naturalproducts/naturalproducts.component';
 import { HoneyproductsComponent } from './honeyproducts/honeyproducts.component';
+import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+import { PageaccueilComponent } from './pageaccueil/pageaccueil.component';
 
 export const routes: Routes = [
   {
@@ -21,6 +23,7 @@ export const routes: Routes = [
     canActivate: [AuthenticationGuard],
     children: [
       { path: 'products', component: ProductsComponent },
+      { path: 'pageaccueil', component: PageaccueilComponent },
       { path: 'customers', component: CustomersComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'allproducts', component: AllproductsComponent },
@@ -35,5 +38,6 @@ export const routes: Routes = [
     ]
   },
   { path: 'login', component: AuthComponentComponent },
-  { path: '', component: AuthComponentComponent , pathMatch: 'full'}
+  { path: '', component: AuthComponentComponent , pathMatch: 'full'},
+  { path: 'forgetpassword', component: ForgetpasswordComponent },
 ];

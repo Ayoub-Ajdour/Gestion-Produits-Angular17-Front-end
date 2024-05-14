@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile, user } from '@angular/fire/auth';
 import { response } from 'express';
 import { UserInterface } from '../../model/userInterface';
-import { Auth, GoogleAuthProvider, signInWithRedirect } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, signInWithRedirect,sendPasswordResetEmail } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -35,17 +35,32 @@ export class AuthService {
       }
     );
   }
-  addUser(username: string, email: string, password: string):Observable<User>{
+  async forgetPassword(email: string) {
+    try {
+      await sendPasswordResetEmail(this.afAuth, email);
+      console.log('Password reset email sent successfully.');
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+    }
+  }
+  addUser(username: string, email: string, password: string,address:string):Observable<User>{
     const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
     .then(response => {
         return updateProfile(response.user, { displayName: username });
     });    const newUser: User = {
       username: username,
       email: email,
+      address:address,
       password: password,
-      roles: "user"
+      role: "user"
     };
-     alert("hi "+ username);
+    var userInfo = "Username: " + username + "\n" +
+               "Email: " + email + "\n" +
+               "Address: " + address + "\n" +
+               "Password: " + password + "\n" +
+               "Roles: user";
+
+alert(userInfo);
     return this.http.post<User>(this.apiUrl, newUser);
  }
   public login(username:string,password:string):Observable<void>{

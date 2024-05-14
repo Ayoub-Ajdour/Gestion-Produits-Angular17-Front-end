@@ -1,0 +1,28 @@
+{
+    "signin":{
+        "title":"Sign in"
+    },
+    "txt":{
+        "title1":"The official sponsor of happiness",
+        "title2":"BiouToudert Company",
+        "text":"On the road to happiness, you'll find us waiting for you... Inhale the essence of our products, life... Authenticity, heritage, and purity... #BioToudert and happiness for all 🌹"
+    },
+    "button":{
+        "showSignUp":"Sign up",
+        "showSignIn":"Sign in",
+        "login":"login",
+        "translate":"Forgot your password?"
+    },
+    "placeh":{
+        "email":"Email",
+         "password":"Password",
+         "username":"Username",
+         "address":"Address"
+    },
+    "errors":{
+        "er1":"There was a problem",
+        "er2":"Please correct and try again.",
+        "er3":"We cannot find an account with that email address"
+    }
+    
+}

@@ -1,83 +1,140 @@
 <div class="container" [ngClass]="getContainerClass()">
     <div class="forms-container">
+      <div style="position: fixed;
+        top: 0;
+        right: 0;
+        padding: 10px;">
+     <img src="../../assets/images/Lang/engl.png" style="width: 60px;" (click)="english()"/>
+     <img src="../../assets/images/Lang/arabic.png" style="width: 60px;margin-left: 10px;" (click)="arabic()"/>
+        </div>
       <div class="signin-signup">
-        <form class="sign-in-form">
-          <h2 class="title">Sign in</h2>
+        <form class="sign-in-form" [formGroup]="form" (ngSubmit)="signIn()">
+          <h2 class="title">{{'signin.title'|translate}}</h2>
+          <div class="alert alert-danger">
+            {{form.value|json}}
+          </div>
+         
           @if (error) {
             <div class="alert alert-danger">
-             <h6> There was a problem</h6>
-              <p>We cannot find an account with that email address</p>
+             <h6> {{'errors.er1'|translate}}</h6>
+              <p>{{'errors.er3'|translate}}</p>
             </div>
           } 
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Email" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" required />
+            <input type="text" placeholder="{{'placeh.email'|translate}}"  formControlName="username"  required />
           </div>
-          <div class="input-field">
+          <div class="input-field" style="margin-bottom: 0;">
             <i class="fas fa-lock"></i>
-            <input type="{{ passwordVisible ? 'text' : 'password' }}" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" required />
+            <input type="{{ passwordVisible ? 'text' : 'password' }}" placeholder="{{'placeh.password'|translate}}"  formControlName="password" required />
             <i class="fas" [ngClass]="{ 'fa-eye': passwordVisible, 'fa-eye-slash': !passwordVisible }" (click)="togglePasswordVisibility()"></i>
           </div>
+          <div style="text-align: right; margin-top: -20; margin-bottom: 30px; font-size: 12px;">
+            <a href="/forgetpassword"><u><font color="blue">{{'button.translate'|translate}}</font></u></a>
+        </div>
+
+
+
+
+
+
+
           
           
           
           
-          
-          <input type="submit" style="background-color: #A7856D; color: #ffffff;" value="Login" class="btn solid" (click)="signIn()" />
+          <input type="submit" style="background-color: #A7856D; color: #ffffff;" value="{{'button.login'|translate}}" class="btn solid"  />
+          <!-- <button type="submit" class="btn btn-success btn-sm"> submit</button> -->
+        
         </form>
         <div class="d-flex justify-content-center text-center mt-4 pt-1 social-media">
          <button (click)="loginwithgoogle()" class="social-icon"><i class="fab fa-google fa-lg"></i></button>
           <a href="#!" class="social-icon"><i class="fab fa-facebook-f fa-lg"></i></a>
           <a href="#!" class="social-icon bold-twitter"><i  style="font-weight: bold;" class="bi bi-twitter-x"></i></a>
       </div>
-      <form class="sign-up-form">
-          <h2 class="title">Sign up</h2>
-          @if (error) {
+     
+      
+      <form class="sign-up-form"  [formGroup]="formInscription" (ngSubmit)="signUp()">
+          <h2 class="title">{{'button.showSignIn'|translate}}</h2>
+         
+          @if (error || ale) {
             <div class="alert alert-danger">
-             <h6> There was a problem</h6>
+             <h6> {{'errors.er1'|translate}}</h6>
              <p>{{errorMESSAGE}}</p>
-              <p><b><i class="fas fa-exclamation-triangle"></i>  Please correct and try again.</b></p>
+              <p style="text-align: center;"><b><i class="fas fa-exclamation-triangle"></i>{{'errors.er2'|translate}}</b></p>
             </div>
             
           } 
+          
+          <!-- <div class="alert alert-danger">
+            {{formInscription.value|json}}
+          </div> -->
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"  #usernameinput="ngModel" required="required" autocomplete="off" ng-disabled="submitted" required pattern="[a-zA-Z0-9._%+-]+[' ']+[a-zA-Z]{2,}$" minlength="4" maxlength="20"/>
-            @if(usernameinput.invalid && usernameinput.dirty){
+            <input type="text" placeholder="{{'placeh.username'|translate}}" formControlName="username"  required="required" autocomplete="off" ng-disabled="submitted" required pattern="[a-zA-Z0-9._%+-]+[' ']+[a-zA-Z]{2,}$" minlength="4" maxlength="20"/>
+            @if(formInscription.controls['username'].dirty){
+              @if(formInscription.controls['username'].hasError('required')){ <i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+              @else if(formInscription.controls['username'].valid){<i class="fas fa-check" style="color: #4ce16f;"></i>}
+              @else if(!formInscription.controls['username'].valid && formInscription.controls['username'].dirty){<i class="fas fa-spinner fa-spin" style="color: #4E3522;"></i>}
+              
+            }@else if(formInscription.controls['username'].touched){
+              @if(!formInscription.controls['username'].valid){<i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+                
+            }
+            <!-- @if(usernameinput.invalid && usernameinput.dirty){
               @if (usernameinput.invalid && (usernameinput.dirty || usernameinput.touched)) {
                 <i class="fas fa-spinner fa-spin"></i>
               }}
               @if(usernameinput.valid){
                 <i class="fas fa-check"></i>
-              }
+              } -->
           </div>
+         
+           
+        
+          
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email" [(ngModel)]="email" name="email" #emailInput="ngModel" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" maxlength="40" required="required" autocomplete="off" ng-disabled="submitted"/>
-            @if(emailInput.invalid && emailInput.dirty){
-            @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
-              <i class="fas fa-spinner fa-spin"></i>
-            }}
-            @if(emailInput.valid){
-              <i class="fas fa-check"></i>
+            <input type="email" placeholder="{{'placeh.email'|translate}}" formControlName="email" name="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" maxlength="40" required="required" autocomplete="off" ng-disabled="submitted"/>
+            @if(formInscription.controls['email'].dirty){
+              @if(formInscription.controls['email'].hasError('required')){ <i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+              @else if(formInscription.controls['email'].valid){<i class="fas fa-check" style="color: #4ce16f;"></i>}
+              @else if(!formInscription.controls['email'].valid && formInscription.controls['email'].dirty){<i class="fas fa-spinner fa-spin" style="color: #4E3522;"></i>}
+              
+            }@else if(formInscription.controls['email'].touched){
+              @if(!formInscription.controls['email'].valid){<i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+                
             }
           </div>
-        
+        <div class="input-field">
+          <i class="fas fa-map-marker"></i>
+          <input type="text" placeholder="{{'placeh.address'|translate}}" formControlName="address" name="address"  required  maxlength="40" required="required" autocomplete="off" ng-disabled="submitted"/>
+          @if(formInscription.controls['address'].dirty){
+            @if(formInscription.controls['address'].hasError('required')){ <i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+            @else if(formInscription.controls['address'].valid){<i class="fas fa-check" style="color: #4ce16f;"></i>}
+            @else if(!formInscription.controls['address'].valid && formInscription.controls['address'].dirty){<i class="fas fa-spinner fa-spin" style="color: #4E3522;"></i>}
+            
+          }@else if(formInscription.controls['address'].touched){
+            @if(!formInscription.controls['address'].valid){<i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+              
+          }
+        </div>
           <div class="input-fieldd">
             <i class="fas fa-lock"></i>
-            <input type="{{ passwordVisible ? 'text' : 'password' }}"  placeholder="Password" [(ngModel)]="password" name="password" #passwordInput="ngModel" 
-            required minlength="4" maxlength="10" autocomplete="off"
-            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{4,10}$" />
+            <input type="{{ passwordVisible ? 'text' : 'password' }}"  placeholder="{{'placeh.password'|translate}}" formControlName="password" name="password" />
+            @if(formInscription.controls['password'].dirty){
+              @if(formInscription.controls['password'].hasError('required')){ <i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+              @else if(formInscription.controls['password'].valid){<i class="fas fa-check" style="color: #4ce16f;"></i>}
+              @else if(!formInscription.controls['password'].valid && formInscription.controls['password'].dirty){<i class="fas fa-spinner fa-spin" style="color: #4E3522;"></i>}
+              
+            }@else if(formInscription.controls['password'].touched){
+              @if(!formInscription.controls['password'].valid){<i class="fas fa-exclamation-triangle red-icon" style="color: #ff3d4d;"></i>}
+                
+            }
             <i class="fas" [ngClass]="{ 'fa-eye': passwordVisible, 'fa-eye-slash': !passwordVisible }" (click)="togglePasswordVisibility()"></i>
-            @if(passwordInput.invalid && passwordInput.dirty){
-              @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
-                <i class="fas fa-spinner fa-spin"></i>
-              }}
-              @if(passwordInput.valid){
-                <i class="fas fa-check"></i>
-              }
+           
           </div>
-          <input type="submit" style="background-color: #A7856D; color: #ffffff;" class="btn" value="Sign up" (click)="signUp()" />
+          <input type="submit" style="background-color: #A7856D; color: #ffffff;" class="btn" value="{{'button.showSignIn'|translate}}" />
         </form>
       </div>
     </div>
@@ -86,30 +143,30 @@
       <div class="panel left-panel">
         <div class="content">
           <h4 style="font-family: Alice!important;line-height: 1.1;text-align: left;">
-          The official sponsor of happiness
+            {{'txt.title1'|translate}}
         </h4>
         <h1 style="font-family: Alice !important;line-height: 1.1;text-align: left;font-weight: bold;">
-          BiouToudert Company
+          {{'txt.title2'|translate}}
         </h1>
         <p style="margin-bottom: 10px;text-align: left;">
-        On the road to happiness, you'll find us waiting for you... Inhale the essence of our products, life... Authenticity, heritage, and purity... #BioToudert and happiness for all 🌹
-      </p>   
-        <button class="btn transparent" (click)="showSignUp()" style="">Sign up</button>
+          {{'txt.text'|translate}}     
+         </p>   
+        <button class="btn transparent" (click)="showSignUp()" style="">{{'button.showSignUp'|translate}}</button>
         </div>
         <img style="display: block; margin: 0 auto; margin-top: 0px;" src="../../assets/images/ba11.png" class="image" alt="" />
       </div>
       <div class="panel right-panel">
         <div class="content">
           <h4 style="font-family: Alice!important;line-height: 1.1;text-align: left;">
-            The official sponsor of happiness
+            {{'txt.title1'|translate}}
           </h4>
           <h1 style="font-family: Alice !important;line-height: 1.1;text-align: left;font-weight: bold;">
-            BiouToudert Company
+            {{'txt.title2'|translate}}
           </h1>
           <p style="margin-bottom: 10px;text-align: left;">
-          On the road to happiness, you'll find us waiting for you... Inhale the essence of our products, life... Authenticity, heritage, and purity... #BioToudert and happiness for all 🌹
-        </p>   
-         <button class="btn transparent" (click)="showSignIn()">Sign in</button>
+            {{'txt.text'|translate}}  
+                </p>   
+         <button class="btn transparent" (click)="showSignIn()">{{'button.showSignIn'|translate}}</button>
         </div>
         <img src="../../assets/images/ba22.png" class="image" alt="" />
       </div>

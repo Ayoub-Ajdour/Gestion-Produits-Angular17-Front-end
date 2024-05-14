@@ -1,83 +1,22 @@
-@if(p!.quantity>0){
-<div class="card-body"> 
-    <div class="product">
-   <div class="product-details"> 
-     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openDetProducts()" style="background-color: transparent;border: none;">
-         <i class="bi bi-info-circle"></i>
-       </button>
-       <img [src]="getImageURL()" [style.width.px]="90" [style.height.px]="90" />
-     <div class="product-info">
-       <div class="name">{{p?.name}}
-         
-          <span class="badge rounded-pill badge-notification bg-danger">{{p?.quantity}}</span>
-          @if (p?.qeerebyasali) {
-          <span class="badge rounded-pill badge-notification bg-danger"><i style="color: rgb(255, 255, 255);font-weight:900;" class="bi bi-exclamation-triangle"></i>  Low Stock</span>
-}
-         </div>
-       <div class="description">{{p?.partType}}</div>
-     </div>
-   </div>
-   
-   
-       <!-- @if (p.qeerebyasali) {
-           <div style=" font-size: 40px;">
-               <i style="color: red;" class="bi bi-exclamation-triangle"></i>
-   </div>
-   <div>
-       <p style="color: red; font-weight: bold; margin-left: 5px;">Low Stock</p>
-   </div>
-   } -->
-   
- 
- 
-   <div class="price">
-    @if(p?.promo==true){ <div style="color: gold;font-weight: bold;"> {{ p?.price }} MAD  <i class="fas fa-tags"></i></div>}
-    @else {<div> {{ p?.price }} MAD </div>}
-     <button class="btn btn-light" (click)="buying()"><i class="bi bi-cart"></i></button>
-   </div>
-  
-  
- </div>
-</div>}
-@else {
-  <div class="card-body" style="background-color: #f8f9fa; color: #6c757d;">
-    <div class="product">
-      <div class="product-details" style="pointer-events: none;"> 
-        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="openDetProducts()" style="background-color: transparent;border: none;" disabled>
-            <i class="bi bi-info-circle"></i>
-          </button>
-          <img [src]="getImageURL()" [style.width.px]="90" [style.height.px]="90" />
-        <div class="product-info">
-          <div class="name">{{p?.name}}
-            
-             <span class="badge rounded-pill badge-notification bg-danger">{{p?.quantity}}</span>
-            
-              
-             <span class="badge rounded-pill badge-notification bg-danger"><i style="color: rgb(255, 255, 255);font-weight:900;" class="bi bi-exclamation-triangle"></i>  Out of Stock</span>
-   
-            </div>
-          <div class="description">{{p?.partType}}</div>
-        </div>
-      </div>
-      
-      
-          <!-- @if (p.qeerebyasali) {
-              <div style=" font-size: 40px;">
-                  <i style="color: red;" class="bi bi-exclamation-triangle"></i>
-      </div>
-      <div>
-          <p style="color: red; font-weight: bold; margin-left: 5px;">Low Stock</p>
-      </div>
-      } -->
-      
-    
-   
-      <div class="price">
-        <div> {{ p?.price }} MAD</div>
-        <button class="btn btn-light" (click)="buying()" disabled><i class="bi bi-cart"></i></button>
-      </div>
-    
+@if(p!.quantity > 0){
+  <div class="product">
+    <div class="product-image">
+      <img src="{{ getImageURL() }}" alt="Product Image">
     </div>
-   </div>
-
+    <div class="product-details">
+      <div class="name">{{ p?.name }} @if(p?.promo == true) {<i class="fas fa-tags" style="color: gold;transform: scale(1.2);font-size: 20px;padding-left: 2px;"></i> } </div>  
+      <div class="type">{{ p?.partType }}</div>
+      <div class="price">
+        @if(p?.promo == true) {
+          <div style="color: gold;font-weight: bold;">{{ p?.price }} MAD </div>
+        } @else {
+          <div>{{ p?.price }} MAD </div>
+        }
+        
+      </div>
+      <button class="btn btn-light" (click)="buying()"><i class="bi bi-cart"></i></button>
+      <p class="description">{{p?.description}}</p>
+    </div>
+  </div>
+  
 }
