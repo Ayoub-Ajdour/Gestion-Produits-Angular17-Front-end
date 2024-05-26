@@ -15,6 +15,8 @@ import { NaturalproductsComponent } from './naturalproducts/naturalproducts.comp
 import { HoneyproductsComponent } from './honeyproducts/honeyproducts.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { PageaccueilComponent } from './pageaccueil/pageaccueil.component';
+import { ProductPageComponent } from './product-page/product-page.component';
+import { BasketComponent } from './basket/basket.component';
 
 export const routes: Routes = [
   {
@@ -33,11 +35,17 @@ export const routes: Routes = [
       { path: 'biotoudert', component: BiotoudertComponent },
       {  path: 'updateproduct/:productId', component: UpdateproductComponent },
       {path:'naturalproducts',component:NaturalproductsComponent},
-      {path:'honeyproducts',component:HoneyproductsComponent}
+      {path:'honeyproducts',component:HoneyproductsComponent},
+      {path:'productpage',component:ProductPageComponent},
+      {path:'basket',component:BasketComponent}   
+
+         
       
     ]
   },
   { path: 'login', component: AuthComponentComponent },
   { path: '', component: AuthComponentComponent , pathMatch: 'full'},
+  // { path: '', component: ProductsComponent , pathMatch: 'full'},
+
   { path: 'forgetpassword', component: ForgetpasswordComponent },
 ];

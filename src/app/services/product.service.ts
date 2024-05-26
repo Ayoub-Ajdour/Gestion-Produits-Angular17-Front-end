@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 import { product } from '../products/product';
-import { BehaviorSubject, Observable, catchError, of, switchMap, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { error } from 'node:console';
 import { User } from '../../model/userApp.model';
@@ -49,23 +49,16 @@ export class ProductService {
     
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
    }
-   public deleteCart(id: number): Observable<boolean> {
-    return this.http.get<UserStock>('http://localhost:8090/api/v1/carts/findbyproduct/' + id + '/' + this.userAct!.user_id).pipe(
-      switchMap((userStock: UserStock) => {
-        console.log("Cart " + userStock.id + " deleted 👌👌👌");
-        return this.http.delete<boolean>('http://localhost:8090/api/v1/carts/' + userStock.id).pipe(
-          catchError(error => {
-            console.error("Error deleting cart:", error);
-            return throwError(error);
-          })
-        );
-      }),
-      catchError(error => {
-        console.error("Error finding user stock:", error);
-        return throwError(error);
-      })
-    );
-  }
+   private cartsUrl = 'http://localhost:8090/api/v1/carts'; 
+   private baseUrl = 'http://localhost:8090/api/v1';
+
+    public deleteCart(id: number): Observable<boolean> {
+      return this.http.delete<void>(`${this.baseUrl}/deletebyproduct/${id}`).pipe(
+        map(() => true),
+        catchError(() => of(false))
+      );
+    }
+  
   // minusCart(id: number):Observable<UserStock>{
   //   return this.http.put<UserStock>(`${this.apiUrl}/userstock/update/${id}`, );
 
@@ -236,7 +229,11 @@ export class ProductService {
     //     }
     //   );
   }
-  
+  checkProductExistence(productId: number): Observable<UserStock> {
+    const userId=this.getUserActuel(this.emailAct);
+
+    return this.http.get<UserStock>(`${this.baseUrl}/findbyproduct/${productId}/ayoubajdour01@gmail.com`);
+  }
   getUserActuel(email:string){
     this.getUserByEmail(email)
     .subscribe(

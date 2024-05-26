@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet ,RouterModule} from '@angular/router';
+import { RouterOutlet ,RouterModule, Router} from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, user ,signOut} from '@angular/fire/auth';
 import { ProductService } from './services/product.service';
@@ -19,6 +19,14 @@ import { Observable } from 'rxjs';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
+gotobasket() {
+  this.router.navigate(['/accueil/basket']);
+
+}
+dihlproduct(id:number) {
+  const ss="/accueil/productpage?productId="+id;
+  this.router.navigate(['/accueil/productpage'], { queryParams: { productId: id } });
+}
 // minusCart(id: number) {
 //   this.productService.minusCart(id).subscribe({
       
@@ -39,7 +47,7 @@ getImageURL(arg0: product) {
 }
 
   a:boolean|undefined;
-  constructor(private productService:ProductService){
+  constructor(private productService:ProductService,private router:Router){
     // this.getAllcarts();
   }
   

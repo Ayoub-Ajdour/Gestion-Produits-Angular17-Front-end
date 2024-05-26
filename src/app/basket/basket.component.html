@@ -1,0 +1,45 @@
+<div class="container-xl">
+    <div class="table-responsive" >
+        <div class="table-wrapper" style="background-color: #EAD5BC
+        ;">
+           <div class="table-title" style="background-color:#CF9477; position: relative;">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2><b>Cart</b></h2>
+                </div>
+                <div class="col-sm-6 number-container">
+                    <h2>{{tamannkolchi}} MAD</h2>
+                </div>
+            </div>
+        </div>
+        
+        
+            
+            @if (carts) {
+              
+                @for(entry of productsAct | keyvalue; track $index){
+            <div class="card-body">
+                <div class="product">
+                    <div class="product-details">
+                        <img [src]="getImageURL(entry.key[0])" alt="Product Image" style="width: 90px; height: 90px;" (click)="dihlproduct(entry.key[0].id)" />
+                        <div class="product-info" (click)="dihlproduct(entry.key[0].id)">
+                            <div class="name">
+                                {{entry.key[0].name}}
+                                <span class="badge rounded-pill badge-notification bg-danger">{{ entry.value }}</span>
+                            </div>
+                            <div class="description">{{entry.key[0].partType}}</div>
+                        </div>
+                    </div>
+                    <div class="price">
+                        <div class="promo-price">{{entry.key[0].price}}.00 MAD</div>
+                        <div class="divider"></div>
+                        <div class="buttons">
+                            <button class="btn btn-light" (click)="deleteCart(entry.key[0].id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>}}
+        </div>
+    </div>
+</div>

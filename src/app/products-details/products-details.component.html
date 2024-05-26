@@ -1,22 +1,28 @@
 @if(p!.quantity > 0){
   <div class="product">
-    <div class="product-image">
-      <img src="{{ getImageURL() }}" alt="Product Image">
+    <div class="product-image" (click)="gotoproductpage(p!)">
+      <!-- Place the sale badge image in the background of the product image -->
+      <div class="sale-badge">
+        @if(p?.promo){
+        <img src="../../assets/images/offre.png" alt=""/>}
+      </div>
+      <!-- Product image -->
+      <img src="{{ getImageURL() }}" class="productimage" alt="Product Image">
     </div>
     <div class="product-details">
-      <div class="name">{{ p?.name }} @if(p?.promo == true) {<i class="fas fa-tags" style="color: gold;transform: scale(1.2);font-size: 20px;padding-left: 2px;"></i> } </div>  
+      <div class="name" (click)="gotoproductpage(p!)">
+        {{ p?.name }} @if(p?.promo == true) {<i class="fas fa-tags" style="color: gold;transform: scale(1.2);font-size: 20px;padding-left: 2px;"></i> } </div>  
       <div class="type">{{ p?.partType }}</div>
       <div class="price">
         @if(p?.promo == true) {
-          <div style="color: gold;font-weight: bold;">{{ p?.price }} MAD </div>
+          <div class="gold">{{ p?.price }} MAD </div>
         } @else {
           <div>{{ p?.price }} MAD </div>
         }
-        
       </div>
-      <button class="btn btn-light" (click)="buying()"><i class="bi bi-cart"></i></button>
+      <button class="btn-79" (click)="buying()"><span><i class="bi bi-cart"></i><p>Buy it Now</p></span></button>
       <p class="description">{{p?.description}}</p>
     </div>
   </div>
-  
 }
+

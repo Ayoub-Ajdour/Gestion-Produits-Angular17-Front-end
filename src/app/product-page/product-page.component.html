@@ -1,0 +1,46 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img [src]="image" class="product-image" alt="Product Image">
+        </div>
+        <div class="col-md-6">
+            <div class="product-details">
+                <h2 class="product-title">{{ product?.name }}</h2>
+                <p class="product-type">Part Type: {{ product?.partType }}</p>
+                <!-- <h3 class="product-price">Price: {{ product?.price }}</h3> -->
+                <p class="product-description">{{ product?.description }}</p>
+                <p><b>SKU:</b>ND</p>
+                <p><b>Categorie: </b>{{product?.partType}}</p>
+                <p><b>Tags: </b>#{{product?.partType}}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="forml">
+                <h3 class="product-price"> {{ pricenssigran }}.00 MAD</h3>
+                <div class="forml-options">
+                    <button class="quantity" (click)="toggleActive(1)" [class.active]="isActive[1]">1kg</button>
+                    <button class="quantity" (click)="toggleActive(2)" [class.active]="isActive[2]">500g</button>
+                    <button class="erase-button" (click)="resetIsActive()" [hidden]="!isActive[1] && !isActive[2]">X Erase</button>
+                </div>
+                <form>
+                    <button class="buttonz" [value]="getvaluen()" (click)="n9ess()">-</button>
+                    <input type="text" [(ngModel)]="quantitylibgha" [ngModelOptions]="{standalone: true}" />
+                    <button class="buttonn" [value]="getvaluep()" (click)="ziid()">+</button>
+                </form>
+                <div style=" display: flex;
+                justify-content: center;
+                align-items: center;">
+                    <button class="addbasket"  (click)="addtobasket()">Add to basket</button>
+                </div>
+                <div style=" display: flex;
+                justify-content: center;
+                align-items: center;">
+                    <button class="wishlist" (click)="addtowishlist()">
+                        <i [ngClass]="{ 'fa fa-heart-o': !wishlist, 'fas fa-heart': wishlist }" aria-hidden="true"></i>
+                        Add to Wishlist
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
