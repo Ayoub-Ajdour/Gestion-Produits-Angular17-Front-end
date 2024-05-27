@@ -18,6 +18,7 @@ import { TranslationService } from '../services/translation.service';
 })
 
 export class AuthComponentComponent implements OnInit{
+
   showSignInForm = true;
   form!:FormGroup;
   formInscription!:FormGroup;
@@ -45,6 +46,10 @@ export class AuthComponentComponent implements OnInit{
   arabic(){
     console.log("change Lang");
     this.translateService.setDefaultLang('ar-ma');
+  }
+  tamazight() {
+    console.log("change Lang");
+    this.translateService.setDefaultLang('ta-ma');
   }
   ngOnInit(): void {
     this.translateService.setDefaultLang('en-us');

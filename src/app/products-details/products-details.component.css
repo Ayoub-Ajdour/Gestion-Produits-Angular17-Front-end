@@ -272,4 +272,29 @@
       width: 100%;
       padding-left: 1rem;
   }
+  .btn-79:active::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition: opacity 0s, transform 0s;
+  }
   
+  .btn-79:active {
+    transform: scale(0.95);
+    /* background-color: #CF9477; */
+  }
+  
+  @keyframes moveButton {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .btn-79.clicked {
+    animation: moveButton 0.3s ease-out;
+  }

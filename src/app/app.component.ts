@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent implements OnInit{
 gotobasket() {
   this.router.navigate(['/accueil/basket']);
@@ -47,6 +48,7 @@ getImageURL(arg0: product) {
 }
 
   a:boolean|undefined;
+
   constructor(private productService:ProductService,private router:Router){
     // this.getAllcarts();
   }
@@ -59,6 +61,9 @@ getImageURL(arg0: product) {
   productsAct: Map<Array<product>, number> = new Map<Array<product>, number>();
 
   raqm:number=0;
+  incrementRaqm() {
+    this.raqm++;
+  }
   deleteCart(id: number) {
     this.productService.deleteCart(id).subscribe({
       
@@ -80,9 +85,16 @@ getImageURL(arg0: product) {
     
   }
   getAllcarts(){
-    this.productService.getAllCarts().subscribe(
+    this.findUser().subscribe(
+      (userId: number) => {
+        console.log('User ID:', userId);
+     
+    this.productService.getCartByUser(userId).subscribe(
       {
+
         next:(value:UserStock[])=> {
+         
+          console.log("++😒😒😒");
           this.carts=value;
           this.loadProductsForCarts();
         },
@@ -90,7 +102,11 @@ getImageURL(arg0: product) {
           this.carts=err;
         },
       }
-     )
+     ) },
+     (error) => {
+       console.error('Error:', error);
+     }
+   );
   }
   loadProductsForCarts(): void {
     this.carts.forEach(cart => {
@@ -122,7 +138,7 @@ getImageURL(arg0: product) {
     });     
     this.productService.cart$.subscribe(cart => {
       // for(let i=0;i<cart.length;i++){
-      //   this.raqm++;
+        // this.raqm++;
       //   const newUserStock = {
       //     userId: 1,
       //     productId: cart[0].id,
@@ -146,7 +162,7 @@ getImageURL(arg0: product) {
           .subscribe(
             (user: User) => {
               this.userlidkhl = user;
-              console.log('User:', this.userlidkhl);
+              console.log('User:', this.userlidkhl.user_id);
             },
             (error) => {
               console.error('Error:', error);
@@ -167,6 +183,48 @@ getImageURL(arg0: product) {
       console.log("acount li ikcmn is "+this.authService.currentUserSig()?.username);
      })
   }
+
+
+  findUser(): Observable<number> {
+    return new Observable<number>((observer) => {
+      this.authService.user$.subscribe(user => {
+        if (user) {
+          this.authService.currentUserSig.set({
+            email: user.email!,
+            username: user.displayName!,
+          });
+          this.nameofuser = user.displayName!;
+          if (user.email != null) {
+            this.productService.getUserActuel(user.email);
+            this.productService.getUserByEmail(user.email)
+              .subscribe(
+                (user: User) => {
+                  this.userlidkhl = user;
+                  observer.next(user.user_id); // Emitting user_id
+                  observer.complete(); // Completing the observable
+                },
+                (error) => {
+                  console.error('Error:', error);
+                  observer.error(error); // Emitting error
+                }
+              );
+          }
+          console.log('username ' + user.displayName + ' email ' + user.email);
+          if (user.email === 'admin@biotoudert.com') {
+            this.a = false;
+          } else {
+            this.a = true;
+          }
+        } else {
+          this.authService.currentUserSig.set(null);
+          observer.next(0); // Emitting 0 when there's no user
+          observer.complete(); // Completing the observable
+        }
+        console.log("account li ikcmn is " + this.authService.currentUserSig()?.username);
+      });
+    });
+  }
+  
  
   title = 'BioToudert';
   

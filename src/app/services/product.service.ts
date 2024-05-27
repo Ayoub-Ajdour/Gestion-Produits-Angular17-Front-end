@@ -49,6 +49,10 @@ export class ProductService {
     
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
    }
+   public getCartByUser(id: number): Observable<UserStock[]> {
+    return this.http.get<UserStock[]>(`http://localhost:8090/api/v1/carts/findbyuser/${id}`);
+}
+
    private cartsUrl = 'http://localhost:8090/api/v1/carts'; 
    private baseUrl = 'http://localhost:8090/api/v1';
 

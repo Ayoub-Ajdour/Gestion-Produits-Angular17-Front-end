@@ -7,10 +7,9 @@
             <div class="product-details">
                 <h2 class="product-title">{{ product?.name }}</h2>
                 <p class="product-type">Part Type: {{ product?.partType }}</p>
-                <!-- <h3 class="product-price">Price: {{ product?.price }}</h3> -->
                 <p class="product-description">{{ product?.description }}</p>
                 <p><b>SKU:</b>ND</p>
-                <p><b>Categorie: </b>{{product?.partType}}</p>
+                <p><b>Category: </b>{{product?.partType}}</p>
                 <p><b>Tags: </b>#{{product?.partType}}</p>
             </div>
         </div>
@@ -26,15 +25,9 @@
                     <button class="buttonz" [value]="getvaluen()" (click)="n9ess()">-</button>
                     <input type="text" [(ngModel)]="quantitylibgha" [ngModelOptions]="{standalone: true}" />
                     <button class="buttonn" [value]="getvaluep()" (click)="ziid()">+</button>
-                </form>
-                <div style=" display: flex;
-                justify-content: center;
-                align-items: center;">
                     <button class="addbasket"  (click)="addtobasket()">Add to basket</button>
-                </div>
-                <div style=" display: flex;
-                justify-content: center;
-                align-items: center;">
+                </form>
+                <div style="display: flex; justify-content: center; align-items: center;">
                     <button class="wishlist" (click)="addtowishlist()">
                         <i [ngClass]="{ 'fa fa-heart-o': !wishlist, 'fas fa-heart': wishlist }" aria-hidden="true"></i>
                         Add to Wishlist
@@ -44,3 +37,36 @@
         </div>
     </div>
 </div>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Us</h5>
+                <p>We offer high-quality products with exceptional service. Visit our store for more information.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <ul class="contact-info">
+                    <li>Email: support&#64;biotouder.com</li>
+                    <li>Phone: +212 657 017 246</li>
+                    <li>Address: Sidi Ouaaziz,Taroudat,Morocco</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <ul class="social-links">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>&copy; 2024 Biotoudert. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>

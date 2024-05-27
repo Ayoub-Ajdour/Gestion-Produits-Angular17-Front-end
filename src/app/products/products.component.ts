@@ -56,7 +56,7 @@ throw new Error('Method not implemented.');
   products!:Array<any>;
   errorMessage:string|undefined;
   qereebysali :boolean | undefined;
-  constructor(private ps : ProductService){
+  constructor(private ps : ProductService,private appComponent: AppComponent){
     
   }
   ngOnDestroy(): void {
@@ -111,11 +111,9 @@ throw new Error('Method not implemented.');
      )
   }
   buying(p:product) :void{
-    // alert(p.name);
     if(p.quantity<=5){
       p.qeerebyasali=true;
     }
-    //  alert(p.qeerebyasali);
     this.ps.buying(p).subscribe(
       {
         next:(value:any)=> {
@@ -130,8 +128,8 @@ throw new Error('Method not implemented.');
       }
      )
      this.ps.addToCart(p);
+     this.appComponent.incrementRaqm();
      
-  
   }
   
   // open(p:product) {
