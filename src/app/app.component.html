@@ -1,74 +1,39 @@
+<!-- app.component.html -->
 
-    @if(a==true){
-      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EAD5BC
-      ;">
-        <div class="container-fluid justify-content-between">
+<nav *ngIf="a === true" class="navbar navbar-expand-lg navbar-light" style="background-color: #EAD5BC;">
+  <div class="container-fluid justify-content-between">
     <div class="d-flex">
       <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="https://biotoudert.com/">
-        <img
-        src="./../assets/images/biotoudert.png"
-        height="50"
-        alt="BioToudert"
-        loading="lazy"
-        />
+        <img src="./../assets/images/biotoudert.png" height="50" alt="BioToudert" loading="lazy" />
       </a>
-
       <form class="input-group w-auto my-auto d-none d-sm-flex">
-        <input
-          autocomplete="off"
-          type="search"
-          class="form-control rounded"
-          placeholder="Search"
-          style="min-width: 125px;"
-        />
-        <span class="input-group-text border-0 d-none d-lg-flex"
-          ><i class="fas fa-search"></i></span>
+        <input autocomplete="off" type="search" class="form-control rounded" placeholder="Search" style="min-width: 125px;" />
+        <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
       </form>
     </div>
-
-   
     <ul class="navbar-nav flex-row d-none d-md-flex">
       <li class="nav-item me-3 me-lg-1 active">
-          <a class="nav-link" routerLink="/accueil/pageaccueil">
-              <span class="icon-container"><i class="fas fa-home fa-lg"></i></span>
-              <!-- <span class="badge rounded-pill badge-notification bg-danger">1</span> -->
-          </a>
+        <a class="nav-link" routerLink="/accueil/pageaccueil"><span class="icon-container"><i class="fas fa-home fa-lg"></i></span></a>
       </li>
       <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link" routerLink="/accueil/products">
-              <span class="icon-container"><i class="fas fa-shopping-bag fa-lg"></i></span>
-          </a>
+        <a class="nav-link" routerLink="/accueil/products"><span class="icon-container"><i class="fas fa-shopping-bag fa-lg"></i></span></a>
       </li>
       <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link" routerLink="/accueil/honeyproducts">
-              <span class="icon-container"><i class="fa fa-forumbee fa-lg" aria-hidden="true"></i></span>
-          </a>
+        <a class="nav-link" routerLink="/accueil/honeyproducts"><span class="icon-container"><i class="fa fa-forumbee fa-lg" aria-hidden="true"></i></span></a>
       </li>
       <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link" routerLink="/accueil/naturalproducts">
-              <span class="icon-container"><i class="fa fa-leaf fa-lg" aria-hidden="true"></i></span>
-          </a>
+        <a class="nav-link" routerLink="/accueil/naturalproducts"><span class="icon-container"><i class="fa fa-leaf fa-lg" aria-hidden="true"></i></span></a>
       </li>
-  </ul>
-  
-  
-    <ul class="navbar-nav flex-row">  
+    </ul>
+    <ul class="navbar-nav flex-row">
       <li class="nav-item me-3 me-lg-1">
         <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-          <img
-          src="./../assets/images/me.jpeg"
-          class="rounded-circle"
-          height="40"
-          alt="Ajdour Ayoub"
-          loading="lazy"
-          />
+          <img src="./../assets/images/me.jpeg" class="rounded-circle" height="40" alt="Ajdour Ayoub" loading="lazy" />
           <strong class="d-none d-sm-block ms-1">{{nameofuser}}</strong>
         </a>
       </li>
       <li class="nav-item me-3 me-lg-1">
-        <a class="nav-link" href="#">
-          <span><i class="fas fa-plus-circle fa-lg"></i></span>
-        </a>
+        <a class="nav-link" href="#"><span><i class="fas fa-plus-circle fa-lg"></i></span></a>
       </li>
       <li class="nav-item dropdown me-3 me-lg-1">
         <a class="nav-link dropdown-toggle hidden-arrow" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,186 +41,85 @@
           <span class="badge rounded-pill badge-notification bg-danger">{{raqm}}</span>
         </a>
         <ul class="dropdown-menu" style="background-color: #EAD5BC;">
-          <!-- Check if carts exist -->
-          @if (carts) {
-            <!-- Loop through the productsAct array -->
-            @for(entry of productsAct | keyvalue; track $index){
-              <li class="product-item">
+          <li *ngIf="carts && productsAct.size > 0">
+            <ng-container *ngFor="let entry of productsAct | keyvalue">
+              <div class="product-item">
                 <div class="product">
-                  <div class="product-details" (click)="dihlproduct(entry.key[0].id)">
-                    <img [src]="getImageURL(entry.key[0])" [style.width.px]="50" [style.height.px]="50" />
-                    <div class="product-info">
-                      <div class="name">{{entry.key[0].name}}</div>
+                  <div class="product-details" (click)="dihlproduct(entry.key)">
+                    <img [src]="getImageURL(entry.value.product)" [style.width.px]="50" [style.height.px]="50" />
+                    <!-- <div class="product-info"> -->
+                      <div class="name">{{ entry.value.product.name }}</div>
                       <div class="quantity-container">
-                        <span class="quantity badge rounded-pill badge-notification bg-danger">{{ entry.value }}</span>
+                        <span class="quantity badge rounded-pill badge-notification bg-danger">{{ entry.value.quantity }}</span>
                       </div>
-                    </div>
+                    <!-- </div> -->
                   </div>
                   <div class="price">
-                    <button class="btn btn-light" (click)="deleteCart(entry.key[0].id)"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-light" (click)="deleteCart(entry.value.product.id)"><i class="bi bi-trash"></i></button>
                   </div>
                 </div>
-              </li>
-            }
-          }
+              </div>
+            </ng-container>
+          </li>
           <li class="showbasket" (click)="gotobasket()">Show the basket</li>
         </ul>
-        
-        
       </li>
       <li class="nav-item dropdown me-3 me-lg-1">
-        <a class="nav-link dropdown-toggle hidden-arrow">
-          <i class="fas fa-bell fa-lg"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">12</span>
-        </a>
-       
+        <a class="nav-link dropdown-toggle hidden-arrow"><i class="fas fa-bell fa-lg"></i><span class="badge rounded-pill badge-notification bg-danger">12</span></a>
       </li>
       <li class="nav-item dropdown me-3 me-lg-1">
-        <a class="nav-link dropdown-toggle hidden-arrow" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fas fa-chevron-circle-down fa-lg"></i>
-        </a>
+        <a class="nav-link dropdown-toggle hidden-arrow" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chevron-circle-down fa-lg"></i></a>
         <ul class="dropdown-menu">
-          <li>
-            <a
-              data-mdb-dropdown-init
-              class="dropdown-item"
-              href="#"
-              role="button"
-              aria-expanded="false"
-              (click)="signout()"
-            >
-            <i class="fas fa-sign-out-alt fa-lg"></i>
-          </a>
-          </li>
-          <!-- Add more submenu items as needed -->
-         
+          <li><a data-mdb-dropdown-init class="dropdown-item" href="#" role="button" aria-expanded="false" (click)="signout()"><i class="fas fa-sign-out-alt fa-lg"></i></a></li>
         </ul>
       </li>
-     
-      <!--  -->
-
-
       <li class="nav-item dropdown me-3 me-lg-1">
-        <a
-          data-mdb-dropdown-init
-          class="nav-link hidden-arrow"
-          href="#"
-          role="button"
-          aria-expanded="false"
-          (click)="signout()"
-        >
-        <i class="fas fa-sign-out-alt fa-lg"></i>
-      </a>
+        <a data-mdb-dropdown-init class="nav-link hidden-arrow" href="#" role="button" aria-expanded="false" (click)="signout()"><i class="fas fa-sign-out-alt fa-lg"></i></a>
       </li>
-
-
     </ul>
   </div>
-  
 </nav>
-  }@else {
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(254, 28, 28);">
-      <div class="container-fluid justify-content-between">
-  <div class="d-flex">
-    <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="https://biotoudert.com/">
-      <img
-      src="./../assets/images/biotoudert.png"
-      height="50"
-      alt="BioToudert"
-      loading="lazy"
-      />
-    </a>
-
-   
+<nav *ngIf="a === false" class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(254, 28, 28);">
+  <div class="container-fluid justify-content-between">
+    <div class="d-flex">
+      <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="https://biotoudert.com/">
+        <img src="./../assets/images/biotoudert.png" height="50" alt="BioToudert" loading="lazy" />
+      </a>
+    </div>
+    <ul class="navbar-nav flex-row d-none d-md-flex">
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link" routerLink="/accueil/admin"><span><i class="fas fa-home fa-lg"></i></span></a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link" routerLink="/accueil/allproducts"><span><i class="fa fa-th-list" aria-hidden="true"></i></span></a>
+      </li>
+      <li class="nav-item me-3 me-lg-1" [ngClass]="{ 'disabled': true }">
+        <span class="nav-link"><i class="fa fa-paint-brush" aria-hidden="true"></i></span>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link" routerLink="/accueil/favoriteproducts"><span><i class="fas fa-star fa-lg"></i></span></a>
+      </li>
+      <li class="nav-item me-3 me-lg-1 active">
+        <a class="nav-link" routerLink="/accueil/addproduct"><span><i class="fas fa-plus-circle fa-lg"></i></span></a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link" routerLink="/accueil/users"><span><i class="fas fa-user fa-lg"></i></span></a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link" routerLink="/accueil/biotoudert"><span><i class="fas fa-globe fa-lg"></i></span></a>
+      </li>
+    </ul>
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+          <img src="./../assets/images/me.jpeg" class="rounded-circle" height="40" alt="Ajdour Ayoub" loading="lazy" />
+          <strong class="d-none d-sm-block ms-1">Admin</strong>
+        </a>
+      </li>
+      <li class="nav-item dropdown me-3 me-lg-1">
+        <a data-mdb-dropdown-init class="nav-link hidden-arrow" href="#" role="button" aria-expanded="false" (click)="signout()"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+      </li>
+    </ul>
   </div>
-
- 
-  <ul class="navbar-nav flex-row d-none d-md-flex">
-    <li class="nav-item me-3 me-lg-1">
-      <a class="nav-link" routerLink="/accueil/admin">
-          <span><i class="fas fa-home fa-lg"></i></span>
-      </a>
-    </li>
-    <li class="nav-item me-3 me-lg-1">
-
-      <a class="nav-link" routerLink="/accueil/allproducts">
-          <span><i class="fa fa-th-list" aria-hidden="true"></i></span>
-      </a>
-    </li>
-    <li class="nav-item me-3 me-lg-1" [ngClass]="{ 'disabled': true }">
-     
-        <span  class="nav-link"><i class="fa fa-paint-brush" aria-hidden="true"></i></span>
-     
-    </li>
-    
-    <li class="nav-item me-3 me-lg-1">
-      <a class="nav-link" routerLink="/accueil/favoriteproducts">
-          <span><i class="fas fa-star fa-lg"></i></span>
-      </a>
-    </li>
-    <li class="nav-item me-3 me-lg-1 active">
-      <a class="nav-link" routerLink="/accueil/addproduct">
-        <span><i class="fas fa-plus-circle fa-lg"></i></span>
-      </a>
-    </li>
-
- 
-    
-
-<li class="nav-item me-3 me-lg-1">
-  <a class="nav-link" routerLink="/accueil/users">
-      <span><i class="fas fa-user fa-lg"></i></span>
-  </a>
-</li>
-<li class="nav-item me-3 me-lg-1">
-  <a class="nav-link" routerLink="/accueil/biotoudert">
-      <span><i class="fas fa-globe fa-lg"></i></span>
-  </a>
-</li>
-
-  
-  </ul>
-
-  <ul class="navbar-nav flex-row">  
-    <li class="nav-item me-3 me-lg-1">
-      <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-        <img
-        src="./../assets/images/me.jpeg"
-        class="rounded-circle"
-        height="40"
-        alt="Ajdour Ayoub"
-        loading="lazy"
-        />
-        <strong class="d-none d-sm-block ms-1">Admin</strong>
-      </a>
-    </li>
-   
-    
-   
-   
-   
-    <!--  -->
-
-
-    <li class="nav-item dropdown me-3 me-lg-1">
-      <a
-        data-mdb-dropdown-init
-        class="nav-link hidden-arrow"
-        href="#"
-        role="button"
-        aria-expanded="false"
-        (click)="signout()"
-      >
-      <i class="fas fa-sign-out-alt fa-lg"></i>
-    </a>
-    </li>
-
-
-  </ul>
-</div>
-
 </nav>
-  }
-  
-
 <router-outlet></router-outlet>

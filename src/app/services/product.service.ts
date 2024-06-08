@@ -7,6 +7,7 @@ import { User } from '../../model/userApp.model';
 import { UserInterface } from '../../model/userInterface';
 import { UserStock } from '../../model/UserStock.model';
 import { response } from 'express';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ProductService {
   userAct:User|undefined;
   productAct:product|undefined;
   
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private auth:AuthService) {
     
     this.products=[
       {id :1,name:"Euphorbes Honey",price:300,url_image:"1.png",parttype:"Mountain Sidr Honey",quantity:10,qeerebyasali:false,url_imagetanya:"picture1.png",
@@ -62,6 +63,22 @@ export class ProductService {
         catchError(() => of(false))
       );
     }
+    
+    public updateCart(idproduct: number, quantity: number): Observable<boolean> {
+      this.auth.user$.subscribe((value)=>{
+        this.emailAct!=value!.email;
+       })
+      this.getUserActuel(this.emailAct);
+        // alert(this.userAct?.user_id);
+        const userID=this.userAct?.user_id;
+        alert("userid + "+userID+" productID "+idproduct)
+        return this.http.put<void>(`${this.baseUrl}/userstock/update/${idproduct}`, { userID, quantity }).pipe(
+          map(() => true),
+          catchError(() => of(false))
+      );
+  }
+  
+  
   
   // minusCart(id: number):Observable<UserStock>{
   //   return this.http.put<UserStock>(`${this.apiUrl}/userstock/update/${id}`, );
@@ -255,5 +272,3 @@ export class ProductService {
     return this.http.get<User>(`http://localhost:8090/api/v1/users/email/${email}`);
   }
 }
-
-

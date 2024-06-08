@@ -4,10 +4,11 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { UserStock } from '../../model/UserStock.model';
 import { product } from '../products/product';
 import { ProductsDetailsComponent } from '../products-details/products-details.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValue } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from '../../model/userApp.model';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-basket',
@@ -17,24 +18,38 @@ import { User } from '../../model/userApp.model';
   styleUrls: ['./basket.component.css']
 })
 export class BasketComponent {
+add(_t11: KeyValue<product[],number>) {
+  ++_t11.value;
+  this.updutCart(_t11.key[0].id,_t11.value);
+}
+minus(_t11: KeyValue<product[],number>) {
+  if(_t11.value>1){
+    --_t11.value;
+    this.updutCart(_t11.key[0].id,_t11.value);
+}else{
+    this.deleteCart(_t11.key[0].id);
+  }
+
+}
+
   tamannkolchi: number = 0;
+  quantitykolchi:number=0;
   carts!: Array<UserStock>;
   raqm: number = 0;
   productsAct: Map<Array<product>, number> = new Map<Array<product>, number>();
-  authService=inject(AuthService);
-  nameofuser: string|undefined;
-  userlidkhl: User|undefined;
-  a: boolean|undefined;
+  authService = inject(AuthService);
+  nameofuser: string | undefined;
+  userlidkhl: User | undefined;
+  a: boolean | undefined;
+  wishlist:boolean=false;
 
-
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router,private appcomponent:AppComponent) {}
 
   getImageURL(arg0: product) {
     return "assets/images/" + arg0.urlImage;
   }
-  
+
   dihlproduct(id: number) {
-    const ss = "/accueil/productpage?productId=" + id;
     this.router.navigate(['/accueil/productpage'], { queryParams: { productId: id } });
   }
 
@@ -44,13 +59,7 @@ export class BasketComponent {
       next: (success: boolean) => {
         if (success) {
           console.log('Cart deleted successfully');
-          // this.carts = this.carts.filter(cart => cart.productId !== idproduct);
-          this.productService.checkProductExistence(idproduct).subscribe((u:UserStock)=>{
-            let index=this.carts.indexOf(u);
-             this.carts.splice(index,1);
-          })
-        //   let index=this.carts.indexOf();
-        //  this.carts.splice(index,1);
+          this.updateLocalCartState(idproduct);
         } else {
           console.error('Failed to delete cart');
         }
@@ -62,55 +71,98 @@ export class BasketComponent {
         }
       }
     });
+    this.appcomponent.getAllcarts();
+  }
+  updutCart(idproduct: number,q:number): void {
+    console.log('Updating cart item with ID:', idproduct);
+    this.productService.updateCart(idproduct,q).subscribe({
+      next: (success: boolean) => {
+        if (success) {
+          console.log('Cart updated successfully');
+          this.updateLocalCartState(idproduct);
+        } else {
+          console.error('Failed to update cart');
+        }
+      },
+      error: (err: any) => {
+        console.error('Error deleting cart item:', err);
+        if (err.status === 404) {
+          console.error('Cart item not found. ID:', idproduct);
+        }
+      }
+    });
+    this.appcomponent.getAllcarts();
+  }
+  updateLocalCartState(idproduct: number) {
+    this.carts = this.carts.filter(cart => cart.productId !== idproduct);
+    const productToRemove = Array.from(this.productsAct.keys()).find(key => key[0].id === idproduct);
+    if (productToRemove) {
+      this.productsAct.delete(productToRemove);
+    }
+    // this.calculateTotal();
   }
 
-  getAllcarts(){
+  calculateTotal() {
+    this.tamannkolchi = 0;
+    this.raqm = 0;
+    this.productsAct.forEach((quantity, products) => {
+      const product = products[0];
+      this.tamannkolchi += product.price * quantity;
+      this.raqm += quantity;
+    });
+  }
+
+  getAllcarts() {
     this.findUser().subscribe(
       (userId: number) => {
         console.log('User ID:', userId);
-     
-    this.productService.getCartByUser(userId).subscribe(
-      {
-
-        next:(value:UserStock[])=> {
-         
-          console.log("++😒😒😒");
-          this.carts=value;
-          this.loadProductsForCarts();
-        },
-        error:(err:any) =>{
-          this.carts=err;
-        },
+        this.productService.getCartByUser(userId).subscribe({
+          next: (value: UserStock[]) => {
+            console.log("++😒😒😒");
+            this.carts = value;
+            this.loadProductsForCarts();
+          },
+          error: (err: any) => {
+            this.carts = err;
+          },
+        });
+      },
+      (error) => {
+        console.error('Error:', error);
       }
-     ) },
-     (error) => {
-       console.error('Error:', error);
-     }
-   );
+    );
+  }
+  toggleX(id: number) {
+    // Implement your logic to handle the X icon click event
+    console.log(`X icon clicked for product with id: ${id}`);
+  }
+
+  toggleHeart(id: number) {
+    this.wishlist = !this.wishlist;
+    console.log(`Heart icon clicked for product with id: ${id}`);
   }
   loadProductsForCarts(): void {
     this.carts.forEach(cart => {
-    this.productService.getProductCart(cart.productId).subscribe(
-      
-      (product: product) => {
-        this.tamannkolchi+=product.price*cart.quantity;
-        const quantity = cart.quantity;
-        const key = [product];
-        const existingQuantity = this.productsAct.get(key);
-        if (existingQuantity !== undefined) {
-          this.productsAct.set(key, existingQuantity + quantity);
-        } else {
-          this.productsAct.set(key, quantity);
+      this.productService.getProductCart(cart.productId).subscribe(
+        (product: product) => {
+          this.tamannkolchi += product.price * cart.quantity;
+          this.quantitykolchi+=cart.quantity;
+          const quantity = cart.quantity;
+          const key = [product];
+          const existingQuantity = this.productsAct.get(key);
+          if (existingQuantity !== undefined) {
+            this.productsAct.set(key, existingQuantity + quantity);
+          } else {
+            this.productsAct.set(key, quantity);
+          }
+          this.raqm += cart.quantity;
+        },
+        (error: any) => {
+          console.error(error);
         }
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
-    this.raqm+=cart.quantity;
+      );
     });
     console.log(this.productsAct);
-   
   }
 
   findUser(): Observable<number> {
@@ -124,18 +176,17 @@ export class BasketComponent {
           this.nameofuser = user.displayName!;
           if (user.email != null) {
             this.productService.getUserActuel(user.email);
-            this.productService.getUserByEmail(user.email)
-              .subscribe(
-                (user: User) => {
-                  this.userlidkhl = user;
-                  observer.next(user.user_id); // Emitting user_id
-                  observer.complete(); // Completing the observable
-                },
-                (error) => {
-                  console.error('Error:', error);
-                  observer.error(error); // Emitting error
-                }
-              );
+            this.productService.getUserByEmail(user.email).subscribe(
+              (user: User) => {
+                this.userlidkhl = user;
+                observer.next(user.user_id); // Emitting user_id
+                observer.complete(); // Completing the observable
+              },
+              (error) => {
+                console.error('Error:', error);
+                observer.error(error); // Emitting error
+              }
+            );
           }
           console.log('username ' + user.displayName + ' email ' + user.email);
           if (user.email === 'admin@biotoudert.com') {
@@ -152,6 +203,7 @@ export class BasketComponent {
       });
     });
   }
+
   ngOnInit(): void {
     this.getAllcarts();
     this.productService.carta$.subscribe(cart => {

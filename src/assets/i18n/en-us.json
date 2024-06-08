@@ -22,7 +22,8 @@
     "errors":{
         "er1":"There was a problem",
         "er2":"Please correct and try again.",
-        "er3":"We cannot find an account with that email address"
+        "er3":"We cannot find an account with that email address",
+        "er4": "The inputs are empty"
     }
     
 }

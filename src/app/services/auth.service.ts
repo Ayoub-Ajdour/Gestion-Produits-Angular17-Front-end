@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { User } from '../../model/userApp.model';
-import { Observable, from, of, throwError } from 'rxjs';
+import { Observable, catchError, from, map, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile, user } from '@angular/fire/auth';
 import { response } from 'express';
@@ -43,26 +43,39 @@ export class AuthService {
       console.error('Error sending password reset email:', error);
     }
   }
-  addUser(username: string, email: string, password: string,address:string):Observable<User>{
-    const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
-    .then(response => {
-        return updateProfile(response.user, { displayName: username });
-    });    const newUser: User = {
+  addUser(username: string, email: string, password: string, address: string): Observable<User> {
+    if (!email || !username || !password) {
+      return throwError(() => new Error('Missing email, username, or password'));
+    }
+
+    const newUser: User = {
       username: username,
       email: email,
-      address:address,
+      address: address,
       password: password,
       role: "user"
     };
-    var userInfo = "Username: " + username + "\n" +
-               "Email: " + email + "\n" +
-               "Address: " + address + "\n" +
-               "Password: " + password + "\n" +
-               "Roles: user";
 
-alert(userInfo);
-    return this.http.post<User>(this.apiUrl, newUser);
- }
+    return from(
+      createUserWithEmailAndPassword(this.firebaseAuth, email, password).then(response => {
+        return updateProfile(response.user, { displayName: username }).then(() => {
+          return this.http.post<User>(this.apiUrl, newUser).toPromise();
+        });
+      })
+    ).pipe(
+      catchError(error => {
+        console.error('Error creating user:', error);
+        return throwError(() => error);
+      }),
+      map(user => {
+        if (!user) {
+          throw new Error('User creation failed');
+        }
+        return user;
+      })
+    );
+  }
+
   public login(username:string,password:string):Observable<void>{
     const promise=signInWithEmailAndPassword(this.firebaseAuth,username,password).then(()=>{});
     return from(promise);

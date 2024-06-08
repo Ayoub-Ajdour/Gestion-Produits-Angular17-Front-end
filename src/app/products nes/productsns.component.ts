@@ -1,19 +1,34 @@
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { product } from './product';
+import { product } from '../products/product';
 import { ProductService } from '../services/product.service';
 import { AppComponent } from '../app.component';
 import {ProductsDetailsComponent} from '../products-details/products-details.component'
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-productsns',
   standalone: true,
   imports: [AppComponent,ProductsDetailsComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 
-export class ProductsComponent implements OnInit,OnChanges,OnDestroy{
+export class ProductsComponentns implements OnInit,OnChanges,OnDestroy{
+awitnslproducts() {
 
+  this.router.navigate(['/accueil/products']);
+  this.animateSeeMore();
+}
+animateSeeMore() {
+  const seeMoreElement = document.querySelector('.see-more');
+  if (seeMoreElement) {
+    seeMoreElement.classList.add('animate');
+    setTimeout(() => {
+      seeMoreElement.classList.remove('animate');
+    }, 1000); // Duration of the animation
+  }
+}
+  i:number=0;
   @ViewChild('exampleModal',{static:false}) exampleModal?:ElementRef;
 description: string|undefined;
 close() {
@@ -56,7 +71,7 @@ throw new Error('Method not implemented.');
   products!:Array<any>;
   errorMessage:string|undefined;
   qereebysali :boolean | undefined;
-  constructor(private ps : ProductService,private appComponent: AppComponent){
+  constructor(private ps : ProductService,private appComponent: AppComponent,private router: Router){
     
   }
   ngOnDestroy(): void {

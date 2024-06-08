@@ -95,3 +95,58 @@
     padding: 10px 0;
     border-bottom: 1px solid #e9ecef;
 }
+.icons {
+    display: flex;
+    margin-right: 20px;
+}
+.icon-button {
+    cursor: pointer;
+    font-size: 35px;
+    margin-right: 20px;
+    transition: background-color 0.3s;
+}
+.icon-buttona {
+    cursor: pointer;
+    font-size: 35px;
+    margin-right: 20px;
+    transition: background-color 0.3s;
+}
+.icon-buttonaf {
+    cursor: pointer;
+    font-size: 35px;
+    margin-right: 20px;
+    color: #fe1c1c; 
+}
+
+.icon-button:hover {
+    color: #CF9477;
+}
+.icon-buttona:hover {
+    color: #fe1c1c;
+}
+
+.numberenter{
+    background-color: #f5f5f5;
+    width: 60px;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+.buttonAM{
+    height: 40px;
+    width: 40px;
+    background-color: #E2E7E9;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.buttonA{
+    margin-right: 10px;
+
+}
+.buttonM{
+    margin-left: 10px;
+}

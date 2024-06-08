@@ -1,26 +1,45 @@
 <div class="container" [ngClass]="getContainerClass()">
     <div class="forms-container">
-      <div style="position: fixed;
-        top: 0;
-        right: 0;
-        padding: 10px;">
-    <img src="../../assets/images/Lang/ta.png" style="width: 60px;margin-left: 10px;" (click)="tamazight()"/>
-     <img src="../../assets/images/Lang/engl.png" style="width: 60px;margin-left: 10px" (click)="english()"/>
-     <img src="../../assets/images/Lang/arabic.png" style="width: 60px;margin-left: 10px;" (click)="arabic()"/>
-        </div>
+      <div style="position: fixed; top: 0; right: 0; padding: 10px;">
+        <img 
+          src="../../assets/images/Lang/engl.png" 
+          style="width: 60px;" 
+          [ngClass]="{'active': activeLanguage === 'english'}" 
+          (click)="english()"
+        />
+        <img 
+          src="../../assets/images/Lang/ta.png" 
+          style="width: 60px; margin-left: 10px;" 
+          [ngClass]="{'active': activeLanguage === 'tamazight'}" 
+          (click)="tamazight()"
+        />
+        <img 
+          src="../../assets/images/Lang/arabic.png" 
+          style="width: 60px; margin-left: 10px;" 
+          [ngClass]="{'active': activeLanguage === 'arabic'}" 
+          (click)="arabic()"
+        />
+      </div>
+      
       <div class="signin-signup">
         <form class="sign-in-form" [formGroup]="form" (ngSubmit)="signIn()">
           <h2 class="title">{{'signin.title'|translate}}</h2>
-          <div class="alert alert-danger">
+          <!-- <div class="alert alert-danger">
             {{form.value|json}}
-          </div>
+          </div> -->
          
           @if (error) {
             <div class="alert alert-danger">
              <h6> {{'errors.er1'|translate}}</h6>
               <p>{{'errors.er3'|translate}}</p>
+           
             </div>
           } 
+          @if(khawyin && dghetbutton){
+          <div class="alert alert-danger">
+            <h6> {{'errors.er1'|translate}}</h6>
+              <p>{{'errors.er4'|translate}}</p>
+          </div>}
           <div class="input-field">
             <i class="fas fa-user"></i>
             <input type="text" placeholder="{{'placeh.email'|translate}}"  formControlName="username"  required />
@@ -64,7 +83,7 @@
              <p>{{errorMESSAGE}}</p>
               <p style="text-align: center;"><b><i class="fas fa-exclamation-triangle"></i>{{'errors.er2'|translate}}</b></p>
             </div>
-            
+
           } 
           
           <!-- <div class="alert alert-danger">
@@ -135,7 +154,7 @@
             <i class="fas" [ngClass]="{ 'fa-eye': passwordVisible, 'fa-eye-slash': !passwordVisible }" (click)="togglePasswordVisibility()"></i>
            
           </div>
-          <input type="submit" style="background-color: #A7856D; color: #ffffff;" class="btn" value="{{'button.showSignIn'|translate}}" />
+          <input type="submit" style="background-color: #A7856D; color: #ffffff;" class="btn transparent" value="{{'button.showSignIn'|translate}}" />
         </form>
       </div>
     </div>
@@ -152,7 +171,7 @@
         <p style="margin-bottom: 10px;text-align: left;">
           {{'txt.text'|translate}}     
          </p>   
-        <button class="btn transparent" (click)="showSignUp()" style="">{{'button.showSignUp'|translate}}</button>
+        <button class="btn transparent" (click)="showSignUp()" >{{'button.showSignUp'|translate}}</button>
         </div>
         <img style="display: block; margin: 0 auto; margin-top: 0px;" src="../../assets/images/ba11.png" class="image" alt="" />
       </div>

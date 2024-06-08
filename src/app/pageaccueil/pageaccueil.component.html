@@ -1,17 +1,19 @@
-<div>
-    <img src="../../assets/images/SS/f1.webp" alt="Image 1" class="imagelfo9" >
+<div class="image-container">
+    <button  (click)="scrollToProducts()">DISCOVER MORE</button>
+    <img src="../../assets/images/SS/f1.png" alt="Image 1" class="imagelfo9">
 </div>
 
 
 <div style="display:flex;">
     <div style="padding: 10px;">
-        <img src="../../assets/images/SS/ss1.webp" alt="Image 1" style="width: 399px; height: 133px; border-radius: 10px;">
+        <img src="../../assets/images/SS/ss1.png" alt="Image 1" style="width: 399px; height: 133px; border-radius: 10px;">
     </div>
     <div style="padding: 10px;">
-        <img src="../../assets/images/SS/ss2.webp" alt="Image 2" style="width: 399px; height: 133px; border-radius: 10px;">
+        <img src="../../assets/images/SS/ss2.png" alt="Image 2" style="width: 399px; height: 133px; border-radius: 10px;">
     </div>
     <div style="padding: 10px;">
-        <img src="../../assets/images/SS/ss3.webp" alt="Image 3" style="width: 399px; height: 133px; border-radius: 10px;">
+        <img src="../../assets/images/SS/ss3.png
+        " alt="Image 3" style="width: 399px; height: 133px; border-radius: 10px;">
     </div>
 </div>
 
@@ -45,7 +47,38 @@
         <p style="color: #C3AC92; font-weight: bold; margin-top: 10px;">Satisfied customer</p>
     </div>
 </div>
-
+<div #productsSection><app-productsns></app-productsns></div>
+    <footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Us</h5>
+                <p>We offer high-quality products with exceptional service. Visit our store for more information.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <ul class="contact-info">
+                    <li>Email: support&#64;biotouder.com</li>
+                    <li>Phone: +212 657 017 246</li>
+                    <li>Address: Sidi Ouaaziz,Taroudat,Morocco</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <ul class="social-links">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>&copy; 2024 Biotoudert. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 <!-- <div style="display:flex;">
 <div style="padding: 40px;">
 <swiper-container effect="cards" grap-cursor="true" style="width: 300px;">

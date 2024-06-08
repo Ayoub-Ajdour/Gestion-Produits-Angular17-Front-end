@@ -5,6 +5,7 @@ import { ProductService } from '../services/product.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-product-page',
@@ -14,8 +15,29 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './product-page.component.css'
 })
 export class ProductPageComponent implements OnInit {
-addtobasket() {
-  this.productService.addToCart(this.product!);
+  errorMessage: any;
+addtobasket():void{
+  
+  if(this.product!.quantity<=5){
+    this.product!.qeerebyasali=true;
+  }
+  this.productService.buying(this.product!).subscribe(
+    {
+      next:(value:any)=> {
+      console.log(this.product!.quantity);
+      // if(p.quantity==0){
+      //    this.deleteProduct(p);
+      // }
+      },
+      error:(err:any) =>{
+        this.errorMessage=err;
+      },
+    }
+   )
+   this.productService.addToCart(this.product!);
+   this.appComponent.getAllcarts();
+  //  this.appComponent.incrementRaqm();
+   
 }
 wishlist:boolean=false;
 addtowishlist() {
@@ -67,7 +89,7 @@ getvaluen() :string{
   }
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,private appComponent: AppComponent
   ) {}
   resetIsActive() {
     this.isActive = [false, false];

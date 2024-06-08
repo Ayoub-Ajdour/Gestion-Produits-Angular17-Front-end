@@ -100,17 +100,29 @@ form {
     align-items: center;
 }
 
-.buttonn, .buttonz {
+.buttonz {
     width: 25px;
     height: 40px;
-    border-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+        border: 1px solid #6c757d;
+    color: #4e2611;
+    font-size: 14px;
+    background-color: #E6E0E0;
+}
+.buttonn {
+    width: 25px;
+    height: 40px;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+
     border: 1px solid #6c757d;
     color: #4e2611;
     font-size: 14px;
     background-color: #E6E0E0;
 }
 
-.buttonn {
+/* .buttonn {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
 }
@@ -118,7 +130,7 @@ form {
 .buttonz {
     border-bottom-left-radius: 50%;
     border-top-left-radius: 50%;
-}
+} */
 
 input[type="text"] {
     width: 25px;

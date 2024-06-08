@@ -30,7 +30,9 @@ export class AuthComponentComponent implements OnInit{
   password: string = '';
   email: string = '';
   address:string='';
-
+  activeLanguage: string = '';
+  khawyin: boolean=true;
+  dghetbutton:boolean=false;
   constructor(private router: Router,private fb:FormBuilder,private auth: AuthService) {}
   translateService=inject(TranslationService);
   passwordVisible: boolean = false;
@@ -39,21 +41,26 @@ export class AuthComponentComponent implements OnInit{
     this.passwordVisible = !this.passwordVisible;
   }
   
-  english(){
-    console.log("change Lang");
+  english() {
+    console.log("Change Language to English");
+    this.activeLanguage = 'english';
     this.translateService.setDefaultLang('en-us');
   }
-  arabic(){
-    console.log("change Lang");
+
+  arabic() {
+    console.log("Change Language to Arabic");
+    this.activeLanguage = 'arabic';
     this.translateService.setDefaultLang('ar-ma');
   }
+
   tamazight() {
-    console.log("change Lang");
+    console.log("Change Language to Tamazight");
+    this.activeLanguage = 'tamazight';
     this.translateService.setDefaultLang('ta-ma');
   }
   ngOnInit(): void {
     this.translateService.setDefaultLang('en-us');
-    this.form=this.fb.group({
+        this.form=this.fb.group({
       username:['',Validators.required,Validators.email],
       password:''
     });
@@ -97,8 +104,16 @@ export class AuthComponentComponent implements OnInit{
     };
   }
   signIn() {
+
+    this.dghetbutton=true;
+    
     this.username=this.form.value.username;
     this.password=this.form.value.password;
+    if(this.username=='' ||this.password==''){
+      this.khawyin=true;
+    }
+    else{
+      this.khawyin=false;
         this.auth.login(this.username,this.password).subscribe({
       next:()=>{
         this.auth.authenticat().subscribe({
@@ -114,7 +129,7 @@ export class AuthComponentComponent implements OnInit{
       error:(err)=>{
         this.error=err;
       }
-    })
+    })}
   }
   
   async loginwithgoogle(){
@@ -157,27 +172,27 @@ ale:boolean=false;
     this.username=this.formInscription.value.username;
     this.password=this.formInscription.value.password;
     this.address=this.formInscription.value.address;
-    this.email=this.form.value.email;
-    if (!this.validateUsername(this.username) || !this.validateEmail(this.email) || !this.validatePassword(this.password)) {
-      console.log("Invalid fields. Please check your input.");
-      let errorMessages: string[] = [];
-      if (!this.validateUsername(this.username)) {
-          errorMessages.push('Invalid Username');
-      }
-      if (!this.validateEmail(this.email)) {
-          errorMessages.push('Invalid Email');
-      }
-      if (!this.validatePassword(this.password)) {
-          errorMessages.push('Invalid Password');
-      }
-      if (!this.validateadress(this.address)) {
-        errorMessages.push('Invalid address');
-    }
-      this.errorMESSAGE = errorMessages.join(' ');
+    this.email=this.formInscription.value.email;
+  //   if (!this.validateUsername(this.username) || !this.validateEmail(this.email) || !this.validatePassword(this.password)) {
+  //     console.log("Invalid fields. Please check your input.");
+  //     let errorMessages: string[] = [];
+  //     if (!this.validateUsername(this.username)) {
+  //         errorMessages.push('Invalid Username');
+  //     }
+  //     if (!this.validateEmail(this.email)) {
+  //         errorMessages.push('Invalid Email');
+  //     }
+  //     if (!this.validatePassword(this.password)) {
+  //         errorMessages.push('Invalid Password');
+  //     }
+  //     if (!this.validateadress(this.address)) {
+  //       errorMessages.push('Invalid address');
+  //   }
+  //     this.errorMESSAGE = errorMessages.join(' ');
   
       
      
-  }else{
+  // }else{
     console.log(this.username,this.email,this.password);
     this.auth.addUser(this.username,this.email,this.password,this.address).subscribe({
       next:(data)=>{
@@ -193,8 +208,8 @@ ale:boolean=false;
       },
       error:(err)=>{
         this.error=err;
-      }
-    })}
+      } })
+    // }
   }
   showSignUp() {
     this.isSignUpMode = true;

@@ -5,7 +5,7 @@
            <div class="table-title" style="background-color:#CF9477; position: relative;">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2><b>Cart</b></h2>
+                    <h2><b>Shopping Bag</b></h2>
                 </div>
                 <div class="col-sm-6 number-container">
                     <h2>{{tamannkolchi}} MAD</h2>
@@ -21,25 +21,59 @@
             <div class="card-body">
                 <div class="product">
                     <div class="product-details">
+                        <div class="icons">
+                            <i class="fas fa-times icon-button" (click)="deleteCart(entry.key[0].id)"></i>
+                            <i [ngClass]="{ 'fa fa-heart-o icon-buttona': !wishlist, 'fas fa-heart icon-buttonaf': wishlist }" (click)="toggleHeart(entry.key[0].id)" aria-hidden="true"></i>
+                        </div>
                         <img [src]="getImageURL(entry.key[0])" alt="Product Image" style="width: 90px; height: 90px;" (click)="dihlproduct(entry.key[0].id)" />
                         <div class="product-info" (click)="dihlproduct(entry.key[0].id)">
                             <div class="name">
                                 {{entry.key[0].name}}
-                                <span class="badge rounded-pill badge-notification bg-danger">{{ entry.value }}</span>
+                                <!-- <span class="badge rounded-pill badge-notification bg-danger">{{ entry.value }}</span> -->
                             </div>
                             <div class="description">{{entry.key[0].partType}}</div>
                         </div>
                     </div>
+                    <div>
+                        <form>
+                            <input type="button" class="buttonAM buttonA" value="+" (click)="add(entry)"/>
+                            <input type="text" class="numberenter" [value]="entry.value"/>
+                            <input type="button" class="buttonAM buttonM" value="-" (click)="minus(entry)"/>
+                        </form>
+                    </div>
                     <div class="price">
                         <div class="promo-price">{{entry.key[0].price}}.00 MAD</div>
                         <div class="divider"></div>
-                        <div class="buttons">
+                        <!-- <div class="buttons">
                             <button class="btn btn-light" (click)="deleteCart(entry.key[0].id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        </div> -->
+                    </div>
+                </div>
+               
+            </div>}
+            
+            <div class="card-body">
+                <div class="product">
+                    <div class="product-details">
+                        <div class="product-info">
+                            <div class="name">
+                               name
+                                <span class="badge rounded-pill badge-notification bg-danger">{{ quantitykolchi }}</span>
+                            </div>
+                            <div class="description">des</div>
+                        </div>
+                    </div>
+                    <div class="price">
+                        <div class="promo-price">{{tamannkolchi}}.00 MAD</div>
+                        <div class="divider"></div>
+                        <div class="buttons">
+                            <button class="btn btn-light"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>
                
-            </div>}}
+            </div>
+        }
         </div>
     </div>
 </div>

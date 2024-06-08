@@ -28,6 +28,15 @@ input {
   min-height: 100vh;
   overflow: hidden;
 }
+/* styles.css or component CSS file */
+.active {
+  border: 2px solid #4E3522;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
 .container:before {
   content: "";
   position:static;
@@ -256,6 +265,7 @@ form.sign-in-form {
 button.btn.transparent:hover {
   color: #4E3522;
   border-color: #4E3522;
+  transform: scale(1.1);
 }
 
 .social-icon:hover {
@@ -275,11 +285,18 @@ button.btn.transparent:hover {
   font-weight: 600;
   margin: 10px 0;
   cursor: pointer;
-  transition: 0.5s;
+  /* transition: 0.5s; */
+  transition: transform 0.2s, box-shadow 0.2s;
+
 }
 
 .btn:hover {
   background-color: #4d84e2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+  transform: scale(0.95); /* Zoom effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .panels-container {
   position: absolute;
@@ -356,8 +373,19 @@ button.btn.transparent:hover {
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.btn.transparent:active {
+  transform: scale(0.95);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
+.btn.transparent:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
 .right-panel .image,
 .right-panel .content {
   transform: translateX(800px);
