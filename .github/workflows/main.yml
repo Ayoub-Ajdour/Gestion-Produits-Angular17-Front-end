@@ -1,0 +1,46 @@
+name: Angular CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # You can specify any other LTS version if needed
+
+    - name: Cache Node.js modules
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Angular app
+      run: npm run build -- --prod
+
+    - name: Run tests
+      run: npm test
+
+    - name: Archive build artifacts
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: angular-dist
+        path: dist/  # Adjust if your output directory is different
